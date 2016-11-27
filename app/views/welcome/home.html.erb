@@ -1,6 +1,8 @@
-<h1>Welcome to FlatCollab!</h1>
-<div class="">
-  <%= button_to "Sign Up", new_user_registration_path %>
-  <%= button_to "Sign In", new_user_session_path %>
-  <%= button_to "Sign In with Github", user_github_omniauth_authorize_path %>
+<div class="content">
+
+  <h1>Welcome to FlatCollab!</h1>
+  <%= link_to "Sign Up", new_user_registration_path, :class => "ui button" %>
+  <%= link_to "Sign In", new_user_session_path, :class => "ui button" %>
+  <%= link_to "Sign In with Github", user_github_omniauth_authorize_path, :class => "ui button" %>
+
 </div>
