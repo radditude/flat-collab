@@ -4,8 +4,13 @@
   <%= devise_error_messages! %>
 
   <div class="field">
+    <%= f.label :name %>
+    <%= f.email_field :name, autofocus: true %>
+  </div>
+
+  <div class="field">
     <%= f.label :email %>
-    <%= f.email_field :email, autofocus: true %>
+    <%= f.email_field :email %>
   </div>
 
   <div class="field">
@@ -22,8 +27,8 @@
   </div>
 
   <div class="actions">
-    <%= f.submit "Sign up" %>
+    <%= f.submit "Sign up", class: "ui button" %>
   </div>
 <% end %>
-
+<br />
 <%= render "devise/shared/links" %>

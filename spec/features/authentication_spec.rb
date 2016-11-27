@@ -14,6 +14,7 @@ RSpec.describe "User Registration and Login", type: :feature do
   describe "Signup Page" do
     it 'does not allow a user to sign up without an email' do
       visit new_user_registration_path
+      fill_in "user_name", with: "Test"
       fill_in "user_password", with: "passwordy"
       fill_in "user_password_confirmation", with: "passwordy"
       click_button "Sign up"
@@ -29,10 +30,43 @@ RSpec.describe "User Registration and Login", type: :feature do
 
     it 'allows a user to sign up with an email and password' do
       visit new_user_registration_path
+      fill_in "user_name", with: "Test"
       fill_in "user_email", with: "test@testy.com"
       fill_in "user_password", with: "passwordy"
       fill_in "user_password_confirmation", with: "passwordy"
       click_button "Sign up"
+      expect(page).not_to have_content("Sign Up")
+    end
+  end
+
+  describe "Logging In" do
+    it 'does not allow a user to log in without credentials' do
+      visit new_user_registration_path
+      fill_in "user_name", with: "Test"
+      fill_in "user_email", with: "test@testy.com"
+      fill_in "user_password", with: "passwordy"
+      fill_in "user_password_confirmation", with: "passwordy"
+      click_button "Sign up"
+
+      click_link "Sign Out"
+      visit new_user_session_path
+      click_button "Log in"
+      expect(page).to have_content("Sign Up")
+    end
+
+    it 'allows a user to log in with correct credentials' do
+      visit new_user_registration_path
+      fill_in "user_name", with: "Test"
+      fill_in "user_email", with: "test@testy.com"
+      fill_in "user_password", with: "passwordy"
+      fill_in "user_password_confirmation", with: "passwordy"
+      click_button "Sign up"
+
+      click_link "Sign Out"
+      visit new_user_session_path
+      fill_in "user_email", with: "test@testy.com"
+      fill_in "user_password", with: "passwordy"
+      click_button "Log in"
       expect(page).not_to have_content("Sign Up")
     end
   end
