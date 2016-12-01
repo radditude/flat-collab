@@ -9,3 +9,8 @@
 .red {
   color: red;
 }
+
+.header {
+  font-size: 1.5em;
+  color: #00B5AD !important;
+}

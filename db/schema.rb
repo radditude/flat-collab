@@ -13,20 +13,20 @@
 ActiveRecord::Schema.define(version: 20161127070304) do
 
   create_table "pair_requests", force: :cascade do |t|
-    t.string   "project"
+    t.string   "project",                null: false
     t.text     "info"
     t.integer  "status",     default: 0
-    t.integer  "user_id"
+    t.integer  "user_id",                null: false
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
   end
 
   create_table "tasks", force: :cascade do |t|
-    t.string   "name"
+    t.string   "name",                   null: false
     t.text     "notes"
     t.integer  "status",     default: 0
     t.datetime "finish_by"
-    t.integer  "team_id"
+    t.integer  "team_id",                null: false
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
   end
@@ -38,8 +38,8 @@ ActiveRecord::Schema.define(version: 20161127070304) do
   end
 
   create_table "user_tasks", force: :cascade do |t|
-    t.integer  "user_id"
-    t.integer  "task_id"
+    t.integer  "user_id",    null: false
+    t.integer  "task_id",    null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
