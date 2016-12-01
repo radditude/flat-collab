@@ -1,14 +1,17 @@
-<div class="ui menu teal inverted massive">
+<div class="ui stackable teal inverted massive menu">
   <%= link_to "FlatCollab", root_path, :class => "item" %>
+  <% if !!current_user %>
+    <%= link_to "Signed in as #{current_user.name}", edit_user_registration_path, :class => "item" %>
+  <% else %>
+    <%= link_to "Sign In with Github", user_github_omniauth_authorize_path, :class => "item" %>
+    <%= link_to "Sign In with Email", new_user_session_path, :class => "item" %>
+    <%= link_to "Sign Up", new_user_registration_path, :class => "item" %>
+  <% end %>
 
-  <div class="right menu">
+
+  <div class="right stackable menu">
     <% if !!current_user %>
-      <%= link_to "Signed in as #{current_user.name}", edit_user_registration_path, :class => "item" %>
       <%= link_to "Sign Out", destroy_user_session_path, :class => "item", :method => "delete" %>
-    <% else %>
-      <%= link_to "Sign In with Github", user_github_omniauth_authorize_path, :class => "item" %>
-      <%= link_to "Sign In", new_user_session_path, :class => "item" %>
-      <%= link_to "Sign Up", new_user_registration_path, :class => "item" %>
     <% end %>
   </div>
 </div>
