@@ -2,7 +2,7 @@ TODOs:
 
 # Pair Requests Index
 
-- set up some seed data
+[x] set up some seed data
 - write a test
 - set up action in controller
 - create a basic view
@@ -13,3 +13,4 @@ TODOs:
 
 - refactor tests to be DRY-er
 - make navbar stackable
+- ruby 2.3.1p112
