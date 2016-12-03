@@ -1,5 +1,7 @@
-<h1>Welcome, <%= current_user.name %>!</h1>
+<h1 class="center">Welcome, <%= current_user.name %>!</h1>
+<div class="ui horizontal divider">find your FlatCollaborator below</div>
 
   <div class="ui relaxed celled list">
     <%= render @requests %>
+    <%= render 'pair_requests/form' %>
   </div>
