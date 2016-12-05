@@ -1,8 +1,17 @@
 <h1 class="center small-space"><%= @team.name %> &mdash; <%= @team.users.first.name %> & <%= @team.users.last.name %></h1>
 
-<div class="ui horizontal divider">tasks</div>
+<div class="ui horizontal divider">to do</div>
 
 <div class="ui relaxed celled list">
   <% @team.tasks.each do |task| %>
+    <div class="item">
+      <br>
+      <div class="content">
+        <div class="caps small-header"><%= task.name %></div><br>
+        <div class="close"><%= task.notes %></div>
+        <p class="small italic">Updated <%= task.updated_at.strftime("%A, %B %e") %></p>
+      </div>
+      <br>
+    </div>
   <% end %>
 </div>
