@@ -9,9 +9,9 @@
       <div class="content">
         <div class="floating">
           <% if task.assigned_to?(current_user) %>
-            <button class="mini ui teal button"><i class="checkmark box icon"></i>Mark Complete</button>
+            <button value="<%= task.id %>" class="mini ui teal button"><i class="checkmark box icon"></i>Mark Complete</button>
           <% else %>
-            <button class="mini ui teal button">Claim Task</button>
+            <button value="<%= task.id %>" class="mini ui teal button">Claim Task</button>
           <% end %>
           <button class="mini ui button"><i class="edit icon"></i>Edit</button>
           <button class="mini ui red button"><i class="remove icon"></i>Delete</button>
