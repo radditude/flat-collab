@@ -7,8 +7,17 @@
     <div class="item">
       <br>
       <div class="content">
-        <div class="caps small-header"><%= task.name %></div><br>
-        <div class="close"><%= task.notes %></div>
+        <div class="floating">
+          <% if task.assigned_to?(current_user) %>
+            <button class="mini ui teal button"><i class="checkmark box icon"></i>Mark Complete</button>
+          <% else %>
+            <button class="mini ui teal button">Claim Task</button>
+          <% end %>
+          <button class="mini ui button"><i class="edit icon"></i>Edit</button>
+          <button class="mini ui red button"><i class="remove icon"></i>Delete</button>
+        </div>
+        <div class="caps small-header"><%= task.name %></div>
+        <%= task.notes %>
         <p class="small italic">Updated <%= task.updated_at.strftime("%A, %B %e") %></p>
       </div>
       <br>
