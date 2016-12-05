@@ -7,7 +7,11 @@
     <% if pair_request.user.id == current_user.id %>
         <%= button_to "Mark Inactive", pair_request_path(pair_request), method: "patch", class: "ui red button" %>
     <% else %>
-      <%= button_to "Join Team!", teams_path, method: "post", class: "ui teal button" %>
+      <%= form_for Team.new, :html => {:class => "ui form"} do |f| %>
+        <%= f.hidden_field :name, value: pair_request.project %>
+        <%= f.hidden_field :user_ids, value: "[#{current_user.id}, #{pair_request.user.id}]" %>
+        <%= f.submit "Join Team!", class: "ui teal button" %>
+      <% end %>
     <% end %>
   </div>
   <br>
