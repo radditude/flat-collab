@@ -9,7 +9,7 @@
     <% else %>
       <%= form_for Team.new, :html => {:class => "ui form"} do |f| %>
         <%= f.hidden_field :name, value: pair_request.project %>
-        <%= f.hidden_field :user_ids, value: "[#{current_user.id}, #{pair_request.user.id}]" %>
+        <%= f.hidden_field :user_ids, value: "#{current_user.id}, #{pair_request.user.id}" %>
         <%= f.submit "Join Team!", class: "ui teal button" %>
       <% end %>
     <% end %>
