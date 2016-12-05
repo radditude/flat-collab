@@ -6,6 +6,13 @@ class Task < ApplicationRecord
   has_many :user_tasks
   has_many :users, through: :user_tasks
 
+  def assigned_to?(user)
+    if self.users.include?(user)
+      true
+    else
+      false
+    end
+  end
 
   def assign_user(user)
     self.users << user
