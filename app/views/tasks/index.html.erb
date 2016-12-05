@@ -1,0 +1,8 @@
+<h1 class="center small-space"><%= @team.name %> &mdash; <%= @team.users.first.name %> & <%= @team.users.last.name %></h1>
+
+<div class="ui horizontal divider">tasks</div>
+
+<div class="ui relaxed celled list">
+  <% @team.tasks.each do |task| %>
+  <% end %>
+</div>
