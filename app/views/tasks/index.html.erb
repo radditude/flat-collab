@@ -3,6 +3,27 @@
 <div class="ui horizontal divider">to do</div>
 
 <div class="ui relaxed celled list">
+  
+  <div class="item">
+  <br>
+  <div class="content">
+    <div class="header">Add task:</div><br>
+    <%= form_for [@team, @task], :html => {:class => "ui form"} do |f| %>
+      <div class="field">
+        <%= f.text_field :name %>
+      </div>
+      <div class="field">
+        <%= f.label :notes, "Notes:" %>
+        <%= f.text_area :notes %>
+      </div>
+
+      <%= f.submit "Add new task", class: "ui button" %>
+    <% end %>
+    </div>
+    <br>
+  </div>
+
+
   <% @team.tasks.each do |task| %>
     <div class="item">
       <br>
