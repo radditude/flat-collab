@@ -7,6 +7,7 @@ class PairRequest < ApplicationRecord
   def mark_inactive
     if self.active?
       self.status = "inactive"
+      self.save
     end
   end
 end
