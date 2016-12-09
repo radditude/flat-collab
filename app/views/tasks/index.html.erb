@@ -3,7 +3,7 @@
 <div class="ui horizontal divider">to do</div>
 
 <div class="ui relaxed celled list">
-  
+
   <div class="item">
   <br>
   <div class="content">
@@ -29,11 +29,16 @@
       <br>
       <div class="content">
         <div class="floating">
-          <% if task.assigned_to?(current_user) %>
-            <button value="<%= task.id %>" class="mini ui teal button"><i class="checkmark box icon"></i>Mark Complete</button>
+          <% if task.assigned_to?(current_user) && !task.complete? %>
+            <%= form_tag complete_task_path(@team, task), method: "patch", class: "ui inline form" do %>
+              <%= submit_tag "Mark Complete", class: "mini ui teal button"  %>
+            <% end %>
+          <% elsif task.assigned_to?(current_user) && task.complete? %>
+            <button class="mini ui teal button">Completed!</button>
           <% else %>
-          
-            <button value="<%= task.id %>" class="mini ui teal button">Claim Task</button>
+            <%= form_tag claim_task_path(@team, task), method: "patch", class: "ui inline form" do %>
+              <%= submit_tag "Claim Task", class: "mini ui teal button"  %>
+            <% end %>
           <% end %>
           <button class="mini ui button"><i class="edit icon"></i>Edit</button>
           <button class="mini ui red button"><i class="remove icon"></i>Delete</button>
