@@ -6,6 +6,8 @@ class Task < ApplicationRecord
   has_many :user_tasks
   has_many :users, through: :user_tasks
 
+  scope :incomplete, -> { where("status < 2")}
+
   def complete_task
     self.status = "complete"
     self.save
