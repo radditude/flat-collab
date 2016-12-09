@@ -1,5 +1,5 @@
 class TasksController < ApplicationController
-  before_filter :logged_in?
+  before_filter :logged_in?, :current_users_team?
 
   def index
     @team = current_team
@@ -27,6 +27,12 @@ class TasksController < ApplicationController
   end
 
   private
+
+  def current_users_team?
+    if !current_team.users.include?(current_user)
+      redirect_to root_path
+    end
+  end
 
   def current_team
     Team.find(params[:team_id])
