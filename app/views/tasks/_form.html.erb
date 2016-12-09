@@ -1,0 +1,11 @@
+<%= form_for [@team, @task], :html => {:class => "ui form"} do |f| %>
+  <div class="field">
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :notes, "Notes:" %>
+    <%= f.text_area :notes %>
+  </div>
+
+  <%= f.submit "Add new task", class: "ui button" %>
+<% end %>

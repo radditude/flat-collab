@@ -5,49 +5,14 @@
 <div class="ui relaxed celled list">
 
   <div class="item">
-  <br>
-  <div class="content">
-    <div class="header">Add task:</div><br>
-    <%= form_for [@team, @task], :html => {:class => "ui form"} do |f| %>
-      <div class="field">
-        <%= f.text_field :name %>
-      </div>
-      <div class="field">
-        <%= f.label :notes, "Notes:" %>
-        <%= f.text_area :notes %>
-      </div>
-
-      <%= f.submit "Add new task", class: "ui button" %>
-    <% end %>
+    <br>
+    <div class="content">
+      <div class="header">Add task:</div><br>
+      <%= render 'form' %>
     </div>
     <br>
   </div>
 
-
-  <% @team.tasks.each do |task| %>
-    <div class="item">
-      <br>
-      <div class="content">
-        <div class="floating">
-          <% if task.assigned_to?(current_user) && !task.complete? %>
-            <%= form_tag complete_task_path(@team, task), method: "patch", class: "ui inline form" do %>
-              <%= submit_tag "Mark Complete", class: "mini ui blue button"  %>
-            <% end %>
-          <% elsif task.assigned_to?(current_user) && task.complete? %>
-            <button class="mini ui teal button">Completed!</button>
-          <% else %>
-            <%= form_tag claim_task_path(@team, task), method: "patch", class: "ui inline form" do %>
-              <%= submit_tag "Claim Task", class: "mini ui green button"  %>
-            <% end %>
-          <% end %>
-          <button class="mini ui button"><i class="edit icon"></i>Edit</button>
-          <button class="mini ui red button"><i class="remove icon"></i>Delete</button>
-        </div>
-        <div class="caps small-header"><%= task.name %></div>
-        <%= task.notes %>
-        <p class="small italic">Updated <%= task.updated_at.strftime("%A, %B %e") %></p>
-      </div>
-      <br>
-    </div>
-  <% end %>
+  <%= render @team.tasks %>
+  
 </div>
