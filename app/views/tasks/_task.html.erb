@@ -1,6 +1,8 @@
 <div class="item">
   <br>
   <div class="content">
+
+    <!-- buttons -->
     <div class="floating">
       <% if task.assigned_to?(current_user) && !task.complete? %>
         <%= render partial: 'complete_button', locals: {team: @team, task: task} %>
@@ -12,6 +14,8 @@
       <button class="mini ui button"><i class="edit icon"></i>Edit</button>
       <button class="mini ui red button"><i class="remove icon"></i>Delete</button>
     </div>
+
+    <!-- task content -->
     <div class="caps small-header"><%= task.name %></div>
     <%= task.notes %>
     <p class="small italic">Updated <%= task.updated_at.strftime("%A, %B %e") %></p>
