@@ -19,6 +19,11 @@ class TasksController < ApplicationController
     redirect_to team_tasks_path(current_team)
   end
 
+  def complete
+    current_task.complete_task
+    redirect_to team_tasks_path(current_team)
+  end
+
   private
 
   def current_team

@@ -46,3 +46,7 @@
 .floating {
   float: right;
 }
+
+.inline {
+  display: inline;
+}
