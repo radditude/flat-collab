@@ -11,8 +11,12 @@
       <% else %>
         <%= render partial: 'claim_button', locals: {team: @team, task: task} %>
       <% end %>
-      <button class="mini ui button"><i class="edit icon"></i>Edit</button>
-      <button class="mini ui red button"><i class="remove icon"></i>Delete</button>
+      <a class="mini ui icon button" href="<%= edit_team_task_path(@team, task) %>"><i class="edit icon"></i></a>
+      <%= form_tag team_task_path(@team, task), method: "delete", class: "ui inline form" do %>
+        <%= button_tag "Mark Complete", class: "mini ui red icon button" do %>
+            <i class="remove icon"></i>
+        <% end %>
+      <% end %>
     </div>
 
     <!-- task content -->

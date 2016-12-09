@@ -34,6 +34,24 @@ class TasksController < ApplicationController
     redirect_to team_tasks_path(current_team)
   end
 
+  def edit
+    @team = current_team
+    @task = current_task
+  end
+
+  def update
+    if current_task.update(task_params)
+      redirect_to team_tasks_path(current_team)
+    else
+      render 'edit'
+    end
+  end
+
+  def destroy
+    current_task.destroy
+    redirect_to team_tasks_path(current_team)
+  end
+
   private
 
   def view

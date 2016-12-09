@@ -1,9 +1,14 @@
 <h1 class="center small-space"><%= @team.name %> &mdash; <%= @team.users.first.name %> & <%= @team.users.last.name %></h1>
 
-<div class="ui horizontal divider">
-  <%= link_to "ALL", team_tasks_path(@team, view: "all"), class: "teal item" %> |
-  <%= link_to "INCOMPLETE", team_tasks_path(@team, view: "incomplete"), class: "teal item" %> |
-  <%= link_to "MY TASKS", team_tasks_path(@team, view: "my_tasks"), class: "teal item" %>
+<div class="ui horizontal divider">to do</div>
+
+
+
+
+<div class="ui three item menu">
+  <%= link_to "ALL", team_tasks_path(@team, view: "all"), class: "item" %>
+  <%= link_to "INCOMPLETE", team_tasks_path(@team, view: "incomplete"), class: "item" %>
+  <%= link_to "MY TASKS", team_tasks_path(@team, view: "my_tasks"), class: "item" %>
 </div>
 
 
