@@ -11,6 +11,7 @@
           <% if task.assigned_to?(current_user) %>
             <button value="<%= task.id %>" class="mini ui teal button"><i class="checkmark box icon"></i>Mark Complete</button>
           <% else %>
+          
             <button value="<%= task.id %>" class="mini ui teal button">Claim Task</button>
           <% end %>
           <button class="mini ui button"><i class="edit icon"></i>Edit</button>
