@@ -1,11 +1,11 @@
 <%= form_for [@team, @task], :html => {:class => "ui form"} do |f| %>
   <div class="field">
-    <%= f.text_field :name %>
+    <%= f.text_field :name, :placeholder => (@task.errors.full_messages_for(:name).first || "do all the things") %>
   </div>
   <div class="field">
     <%= f.label :notes, "Notes:" %>
-    <%= f.text_area :notes %>
+    <%= f.text_area :notes, :placeholder => "I said ALL the things"  %>
   </div>
 
-  <%= f.submit "Add new task", class: "ui button" %>
+  <%= f.submit "Submit", class: "ui button" %>
 <% end %>

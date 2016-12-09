@@ -2,7 +2,7 @@ class WelcomeController < ApplicationController
   def home
     if current_user
       @request = PairRequest.new
-      @requests = PairRequest.all.where(status: "active")
+      @requests = PairRequest.all.where(status: "active").persisted
       render 'pair_requests/index'
     else
       render 'home'

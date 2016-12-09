@@ -10,7 +10,7 @@ class TasksController < ApplicationController
     elsif view == "my_tasks"
       @tasks = current_user.tasks.where("team_id = ?", current_team.id)
     else
-      @tasks = current_team.tasks
+      @tasks = current_team.tasks.persisted
     end
   end
 
@@ -20,7 +20,8 @@ class TasksController < ApplicationController
     if @task.save
       redirect_to team_tasks_path(@team)
     else
-      render 'index'
+      @tasks = @team.tasks.persisted
+      render :index
     end
   end
 
