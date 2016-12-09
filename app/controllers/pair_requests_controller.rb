@@ -1,4 +1,6 @@
 class PairRequestsController < ApplicationController
+  before_filter :logged_in?
+  
   def create
     current_user.pair_requests.create(pair_request_params)
     redirect_to root_path

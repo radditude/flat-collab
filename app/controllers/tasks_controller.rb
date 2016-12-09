@@ -1,4 +1,6 @@
 class TasksController < ApplicationController
+  before_filter :logged_in?
+
   def index
     @team = current_team
     @task = Task.new
