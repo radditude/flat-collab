@@ -5,8 +5,10 @@ class TasksController < ApplicationController
     # raise params.inspect
     @team = current_team
     @task = Task.new
-    if params[:view] == "incomplete"
+    if view == "incomplete"
       @tasks = current_team.tasks.incomplete
+    elsif view == "my_tasks"
+      @tasks = current_user.tasks.where("team_id = ?", current_team.id)
     else
       @tasks = current_team.tasks
     end
@@ -34,8 +36,8 @@ class TasksController < ApplicationController
 
   private
 
-  def which_tasks
-    params.require(:commit)
+  def view
+    params[:view]
   end
 
   def current_users_team?
