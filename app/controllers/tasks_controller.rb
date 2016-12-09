@@ -2,8 +2,14 @@ class TasksController < ApplicationController
   before_filter :logged_in?, :current_users_team?
 
   def index
+    # raise params.inspect
     @team = current_team
     @task = Task.new
+    if params[:view] == "incomplete"
+      @tasks = current_team.tasks.incomplete
+    else
+      @tasks = current_team.tasks
+    end
   end
 
   def create
@@ -27,6 +33,10 @@ class TasksController < ApplicationController
   end
 
   private
+
+  def which_tasks
+    params.require(:commit)
+  end
 
   def current_users_team?
     if !current_team.users.include?(current_user)
