@@ -1,9 +1,14 @@
 class PairRequestsController < ApplicationController
   before_filter :logged_in?
-  
+
   def create
-    current_user.pair_requests.create(pair_request_params)
-    redirect_to root_path
+    @request = current_user.pair_requests.new(pair_request_params)
+    if @request.save
+      redirect_to root_path
+    else
+      @requests = PairRequest.all.where(status: "active").persisted
+      render 'index'
+    end
   end
 
   def update

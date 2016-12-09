@@ -5,11 +5,11 @@
     <%= form_for @request, :html => {:class => "ui form"} do |f| %>
       <div class="field">
         <%= f.label :project, "Name of Project" %>
-        <%= f.text_field :project %>
+        <%= f.text_field :project, :placeholder => (@request.errors.full_messages_for(:project).first || "The best app evar" ) %>
       </div>
       <div class="field">
         <%= f.label :info, "Info (good stuff to include here: the nature of the project, when you plan to get started, your email or Slack info)" %>
-        <%= f.text_area :info %>
+        <%= f.text_area :info, :placeholder => "Wanna make the best app evar?"  %>
       </div>
 
       <%= f.submit "Add Listing", class: "ui button" %>

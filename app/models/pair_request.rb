@@ -4,6 +4,8 @@ class PairRequest < ApplicationRecord
 
   enum status: [:active, :inactive]
 
+  scope :persisted, -> { where "id IS NOT NULL" }
+
   def mark_inactive
     if self.active?
       self.status = "inactive"
