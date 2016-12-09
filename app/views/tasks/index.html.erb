@@ -31,13 +31,13 @@
         <div class="floating">
           <% if task.assigned_to?(current_user) && !task.complete? %>
             <%= form_tag complete_task_path(@team, task), method: "patch", class: "ui inline form" do %>
-              <%= submit_tag "Mark Complete", class: "mini ui teal button"  %>
+              <%= submit_tag "Mark Complete", class: "mini ui blue button"  %>
             <% end %>
           <% elsif task.assigned_to?(current_user) && task.complete? %>
             <button class="mini ui teal button">Completed!</button>
           <% else %>
             <%= form_tag claim_task_path(@team, task), method: "patch", class: "ui inline form" do %>
-              <%= submit_tag "Claim Task", class: "mini ui teal button"  %>
+              <%= submit_tag "Claim Task", class: "mini ui green button"  %>
             <% end %>
           <% end %>
           <button class="mini ui button"><i class="edit icon"></i>Edit</button>
