@@ -8,6 +8,8 @@
         <%= render partial: 'complete_button', locals: {team: @team, task: task} %>
       <% elsif task.assigned_to?(current_user) && task.complete? %>
         <button class="mini ui teal button">Completed!</button>
+      <% elsif !task.users.empty? %>
+        <button class="mini ui teal button"><%= task.users.first.name %></button>
       <% else %>
         <%= render partial: 'claim_button', locals: {team: @team, task: task} %>
       <% end %>
