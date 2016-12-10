@@ -1,7 +1,7 @@
 <div class="item">
   <br>
   <div class="content">
-    <div class="header"><%= pair_request.user.name %> needs a parter for <%= pair_request.project %></div><br>
+    <div class="header"><%= pair_request.user.name %> is looking for a parter for <%= pair_request.project %></div><br>
     <%= pair_request.info %>
     <p class="small italic">Posted <%= pair_request.updated_at.strftime("%A, %B %e") %></p>
     <% if pair_request.user.id == current_user.id %>
@@ -12,7 +12,8 @@
           <%= g.hidden_field :id, value: pair_request.id %>
         <% end %>
         <%= f.hidden_field :name, value: pair_request.project %>
-        <%= f.hidden_field :user_ids, value: "#{current_user.id}, #{pair_request.user.id}" %>
+        <%= hidden_field_tag :"team[user_ids][]", pair_request.user.id %>
+        <%= hidden_field_tag :"team[user_ids][]", current_user.id %>
         <%= f.submit "Join Team!", class: "small ui teal button" %>
       <% end %>
     <% end %>

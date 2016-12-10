@@ -13,3 +13,5 @@ TODOs:
 
 - refactor tests to be DRY-er
 [x] make navbar stackable
+
+<%= javascript_include_tag 'application' %>
