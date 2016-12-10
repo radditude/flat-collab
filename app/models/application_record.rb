@@ -3,7 +3,7 @@ class ApplicationRecord < ActiveRecord::Base
 
   def user_ids=(ids)
     if ids.is_a?(String)
-      ids_array = ids.to_str.split(", ")
+      ids_array = ids.split(", ")
     else
       ids_array = ids
     end
