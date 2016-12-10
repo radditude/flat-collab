@@ -9,7 +9,7 @@
       <% elsif task.assigned_to?(current_user) && task.complete? %>
         <button class="mini ui teal button">Completed!</button>
       <% elsif !task.users.empty? %>
-        <button class="mini ui teal button"><%= task.users.first.name %></button>
+
       <% else %>
         <%= render partial: 'claim_button', locals: {team: @team, task: task} %>
       <% end %>
@@ -22,7 +22,11 @@
     </div>
 
     <!-- task content -->
-    <div class="caps small-header"><%= task.name %></div>
+    <div class="caps small-header"><%= task.name %>
+      <% if !task.users.empty? %>
+         &mdash; <%= task.users.pluck(:name).to_sentence %>
+      <% end %>
+    </div>
     <%= task.notes %>
     <p class="small italic">Updated <%= task.updated_at.strftime("%A, %B %e") %></p>
   </div>
