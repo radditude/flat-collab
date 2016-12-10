@@ -17,6 +17,8 @@ class TasksController < ApplicationController
   def create
     @team = current_team
     @task = @team.tasks.new(task_params)
+    @task.status = "claimed" unless @task.users.empty?
+
     if @task.save
       redirect_to team_tasks_path(@team)
     else
@@ -74,7 +76,7 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    params.require(:task).permit(:name, :notes)
+    params.require(:task).permit(:name, :notes, :user_ids => [])
   end
 
 end

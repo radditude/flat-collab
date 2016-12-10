@@ -4,7 +4,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable,
   :validatable, :omniauthable, :omniauth_providers => [:github]
 
-  validates_presence_of :name, :on => create
+  validates_presence_of :name
 
   # Associations
   has_many :pair_requests
