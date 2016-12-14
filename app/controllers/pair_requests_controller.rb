@@ -1,5 +1,5 @@
 class PairRequestsController < ApplicationController
-  before_filter :logged_in?
+  before_action :logged_in?
 
   def create
     @request = current_user.pair_requests.new(pair_request_params)

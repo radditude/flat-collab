@@ -1,5 +1,5 @@
 class TasksController < ApplicationController
-  before_filter :logged_in?, :current_users_team?
+  before_action :logged_in?, :current_users_team?
 
   def index
     # raise params.inspect
