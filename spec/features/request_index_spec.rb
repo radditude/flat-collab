@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe "User Home page slash request index page", type: :feature do
   before do
     log_in
+    @request = create(:pair_request)
   end
 
   it 'redirects to the pair requests index page when logged in' do
