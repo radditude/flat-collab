@@ -3,7 +3,7 @@
 
 <div class="ui horizontal divider">to do</div>
 
-<div class="ui three item menu">
+<div class="ui three item menu" id="menu">
   <%= link_to "ALL", team_tasks_path(@team, view: "all"), class: "item" %>
   <%= link_to "INCOMPLETE", team_tasks_path(@team, view: "incomplete"), class: "item" %>
   <%= link_to "MY TASKS", team_tasks_path(@team, view: "my_tasks"), class: "item" %>
