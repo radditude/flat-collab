@@ -7,4 +7,15 @@ module Helpers
       fill_in "user_password", with: @user.password
       click_button "Log in"
     end
+    
+    def add_pair_request
+      fill_in "pair_request_project", with: "Another test project!"
+      fill_in "pair_request_info", with: "some info"
+      click_button "Add Listing"
+    end
+    
+    def go_to_team_tasks
+      click_button "Join Team!"
+    end
+  
 end
