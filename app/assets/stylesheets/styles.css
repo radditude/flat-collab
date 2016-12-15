@@ -1,5 +1,5 @@
 body {
-  background-color: #4ccbc5 !important;
+  background-color: #B0F3FF !important;
   height: 100%;
   z-index: -1;
 }
@@ -11,8 +11,7 @@ body {
 }
 
 #nav-bar {
-  background-color: rgba(0, 181, 173, .8) !important;
-  opacity: 1;
+  background-color: rgba(0, 188, 225, .8) !important;
   z-index: 1;
   position: relative;
   width: 100%;
@@ -22,8 +21,8 @@ input[type="text"], textarea, #menu {
   background-color : rgba(255, 255, 255, 0.4) !important;
 }
 
-a.teal {
-  color: #00B5AD !important;
+a.blue-text, span.blue-text {
+  color: #00BCE1 !important;
 }
 
 .vertical-space {
@@ -40,15 +39,19 @@ a.teal {
 }
 
 .red {
-  background-color: rgba(181, 0, 8, 0.4) !important;
+  background-color: rgba(181, 0, 8, 0.5) !important;
+}
+
+.yellow {
+  background-color: rgba(249, 197, 26, .8) !important;
 }
 
 .green {
-  background-color: rgba(181, 173, 0, 0.6) !important;
+  background-color: rgba(103, 164, 67, .8) !important;
 }
 
 .blue {
-  background-color: rgba(0, 98, 181, 0.6) !important;
+  background-color: rgba(0, 188, 225, .8) !important;
 }
 
 button.red, button.white {
@@ -56,8 +59,7 @@ button.red, button.white {
 }
 
 .small-header {
-  font-size: 1em;
-  color: #00B5AD !important;
+  font-size: 1.1em;
   margin-bottom: .2em;
 }
 
