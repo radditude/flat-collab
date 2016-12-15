@@ -7,7 +7,7 @@
       <% if task.assigned_to?(current_user) && !task.complete? %>
         <%= render partial: 'complete_button', locals: {team: @team, task: task} %>
       <% elsif task.complete? %>
-        <button class="mini ui teal button">Completed!</button>
+        <button class="mini ui green button">Completed!</button>
       <% elsif !task.users.empty? %>
         <!-- shows nothing if task doesn't belong to user -->
       <% else %>
@@ -35,7 +35,7 @@
          &mdash; <%= task.users.pluck(:name).to_sentence %>
       <% end %>
     </div>
-    <%= task.notes %>
+    <span class="blue-text"><%= task.notes %></span>
     <p class="small italic">Updated <%= task.updated_at.strftime("%A, %B %e") %></p>
   </div>
   <br>
