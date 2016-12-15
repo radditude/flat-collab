@@ -15,7 +15,7 @@
       <% end %>
 
       <!-- edit task button -->
-      <%= link_to edit_team_task_path(@team, task) do %>
+      <%= link_to edit_team_task_path(@team, task), id: "edit_#{task.id}" do %>
         <%= button_tag "Edit", class: "mini ui icon button" do %>
           <i class="edit icon"></i>
         <% end %>
@@ -23,7 +23,7 @@
 
       <!-- delete task button -->
       <%= form_tag team_task_path(@team, task), method: "delete", class: "ui inline form" do %>
-        <%= button_tag "Delete", class: "mini ui red icon button" do %>
+        <%= button_tag "Delete", class: "mini ui red icon button", id: "delete_#{task.id}" do %>
             <i class="remove icon"></i>
         <% end %>
       <% end %>
