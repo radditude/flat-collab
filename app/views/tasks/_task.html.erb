@@ -6,16 +6,24 @@
     <div class="floating">
       <% if task.assigned_to?(current_user) && !task.complete? %>
         <%= render partial: 'complete_button', locals: {team: @team, task: task} %>
-      <% elsif task.assigned_to?(current_user) && task.complete? %>
+      <% elsif task.complete? %>
         <button class="mini ui teal button">Completed!</button>
       <% elsif !task.users.empty? %>
-
+        <!-- shows nothing if task doesn't belong to user -->
       <% else %>
         <%= render partial: 'claim_button', locals: {team: @team, task: task} %>
       <% end %>
-      <a class="mini ui icon button" href="<%= edit_team_task_path(@team, task) %>"><i class="edit icon"></i></a>
+
+      <!-- edit task button -->
+      <%= link_to edit_team_task_path(@team, task) do %>
+        <%= button_tag "Edit", class: "mini ui icon button" do %>
+          <i class="edit icon"></i>
+        <% end %>
+      <% end %>
+
+      <!-- delete task button -->
       <%= form_tag team_task_path(@team, task), method: "delete", class: "ui inline form" do %>
-        <%= button_tag "Mark Complete", class: "mini ui red icon button" do %>
+        <%= button_tag "Delete", class: "mini ui red icon button" do %>
             <i class="remove icon"></i>
         <% end %>
       <% end %>
