@@ -1,3 +1,23 @@
+body {
+  background-color: #4ccbc5 !important;
+  height: 100%;
+  z-index: -1;
+}
+
+#text-container {
+  background-color: #FFFFFF !important;
+  opacity: .75;
+  height: 100%;
+  padding: 3em;
+}
+
+#nav-bar {
+  opacity: .8;
+  z-index: 1;
+  position: relative;
+  width: 100%;
+}
+
 a.teal {
   color: #00B5AD !important;
 }
@@ -10,6 +30,7 @@ a.teal {
   margin-top: 2em !important;
 }
 
+
 .center {
   text-align: center;
 }
@@ -17,11 +38,6 @@ a.teal {
 .red {
   color: red;
 }
-
-/*.header {
-  font-size: 1.5em;
-  color: #00B5AD !important;
-}*/
 
 .small-header {
   font-size: 1em;

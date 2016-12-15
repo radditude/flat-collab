@@ -11,13 +11,13 @@
   <body>
     <%= render 'layouts/navigation' %>
     <% if !!current_user %>
-      <div class="ui text container">
+      <div class="ui text container" id="text-container">
         <%= render 'layouts/messages' %>
         <%= yield %>
       </div>
     <% else %>
-      <div class="ui text container">
-        <div class="ui very padded segment vertical-space">
+      <div class="ui text container" id="text-container">
+        <div class="ui very padded segment">
           <%= render 'layouts/messages' %>
           <%= yield %>
         </div>
