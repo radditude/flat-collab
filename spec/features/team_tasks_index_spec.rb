@@ -14,7 +14,7 @@ RSpec.describe "team tasks index page", type: :feature do
 
   it 'shows the task list' do
       expect(page).to have_content("to do")
-      expect(page).to have_content("")
+      expect(page).to have_content("do the thing")
   end
 
 
