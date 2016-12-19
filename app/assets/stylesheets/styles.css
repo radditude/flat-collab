@@ -42,7 +42,12 @@ a.blue-text, span.blue-text {
   background-color: rgba(181, 0, 8, 0.5) !important;
 }
 
-.alert-error, .alert-danger {
+.notice {
+  text-align: center;
+  color: #00BCE1 !important;
+}
+
+.alert, .alert-error, .alert-danger {
   color: #ff0000 !important;
 }
 
