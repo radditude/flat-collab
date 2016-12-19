@@ -87,8 +87,8 @@ button.red, button.white {
 
 .small {
   font-size: .7em;
-  margin-top: .6em;
-  text-align: right;
+  margin-top: 1em;
+  /*text-align: right;*/
 }
 
 .italic {
@@ -101,6 +101,7 @@ button.red, button.white {
 
 .floating {
   float: right;
+  clear: left;
 }
 
 .inline {
