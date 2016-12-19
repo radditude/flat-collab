@@ -42,6 +42,18 @@ a.blue-text, span.blue-text {
   background-color: rgba(181, 0, 8, 0.5) !important;
 }
 
+.alert-error, .alert-danger {
+  color: #ff0000 !important;
+}
+
+.field_with_errors {
+  color: #ff0000;
+}
+
+.field_with_errors > input {
+  border-color: #ff0000 !important;
+}
+
 .yellow {
   background-color: rgba(249, 197, 26, .8) !important;
 }
