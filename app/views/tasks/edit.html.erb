@@ -1,4 +1,4 @@
-<h1 class="center small-space">Edit Task</h1>
+<h1 class="center">Edit Task</h1>
 
 <div class="ui horizontal divider"></div>
 
@@ -8,9 +8,12 @@
     <div class="item">
       <br>
       <div class="content">
-        <div class="header">Edit task:</div><br>
+        <div class="caps small-header">Edit task</div><br>
         <%= render 'form' %>
       </div>
+      <br>
+      <%= link_to "<< Back to list", team_tasks_path(@team) %>
+      <br>
       <br>
     </div>
 
