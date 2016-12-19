@@ -12,21 +12,24 @@
 
 ActiveRecord::Schema.define(version: 20161127070304) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "pair_requests", force: :cascade do |t|
-    t.string   "project"
+    t.string   "project",                null: false
     t.text     "info"
     t.integer  "status",     default: 0
-    t.integer  "user_id"
+    t.integer  "user_id",                null: false
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
   end
 
   create_table "tasks", force: :cascade do |t|
-    t.string   "name"
+    t.string   "name",                   null: false
     t.text     "notes"
     t.integer  "status",     default: 0
     t.datetime "finish_by"
-    t.integer  "team_id"
+    t.integer  "team_id",                null: false
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
   end
@@ -38,8 +41,8 @@ ActiveRecord::Schema.define(version: 20161127070304) do
   end
 
   create_table "user_tasks", force: :cascade do |t|
-    t.integer  "user_id"
-    t.integer  "task_id"
+    t.integer  "user_id",    null: false
+    t.integer  "task_id",    null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -67,8 +70,8 @@ ActiveRecord::Schema.define(version: 20161127070304) do
     t.string   "provider"
     t.string   "uid"
     t.string   "name"
-    t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
 
 end
