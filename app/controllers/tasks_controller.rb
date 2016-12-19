@@ -2,12 +2,12 @@ class TasksController < ApplicationController
   before_action :user_logged_in?, :current_users_team?
 
   def index
-    # raise params.inspect
     @team = current_team
     @task = Task.new
-    if view == "incomplete"
+    
+    if view_incomplete
       @tasks = current_team.tasks.incomplete
-    elsif view == "my_tasks"
+    elsif view_my_tasks
       @tasks = current_user.tasks.where("team_id = ?", current_team.id)
     else
       @tasks = current_team.tasks.persisted
@@ -59,6 +59,14 @@ class TasksController < ApplicationController
 
   def view
     params[:view]
+  end
+  
+  def view_incomplete
+    view == "incomplete"
+  end
+  
+  def view_my_tasks
+    view == "my_tasks"
   end
 
   def current_users_team?
