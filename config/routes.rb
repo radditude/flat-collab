@@ -10,6 +10,8 @@ Rails.application.routes.draw do
 
   patch '/teams/:team_id/tasks/:id/complete', to: "tasks#complete", as: "complete_task"
 
+  post '/pair_requests/:id/create-team', to: "teams#create", as: "create_team"
+
   resources :pair_requests, only: [:create, :update, :destroy]
 
   devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
