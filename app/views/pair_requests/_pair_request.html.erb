@@ -8,7 +8,7 @@
     <p class="small italic">Posted <%= show_updated_at(pair_request) %></p>
     
     <!-- BUTTONS -->
-    <% if pair_request.user.id == current_user.id %>
+    <% if belongs_to_user(pair_request) %>
         <%= button_to "Mark Inactive", pair_request_path(pair_request), method: "patch", class: "small ui red button" %>
     <% else %>
     
