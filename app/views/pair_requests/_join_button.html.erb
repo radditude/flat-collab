@@ -1,4 +1,4 @@
-<%= form_for Team.new, :html => {:class => "ui form"} do |f| %>
+<%= form_for team, :html => {:class => "ui form"} do |f| %>
     <%= hidden_field_tag :"pair_request[id]", pair_request.id %>
 
     <%= f.hidden_field :name, value: pair_request.project %>
