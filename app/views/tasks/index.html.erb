@@ -1,8 +1,8 @@
 <h1 class="center"><%= @team.name %> &mdash; <%= @team.users.first.name %> & <%= @team.users.last.name %></h1>
 
-
 <div class="ui horizontal divider">to do</div>
 
+<!-- TOGGLE MENU -->
 <div class="ui three item menu" id="menu">
   <%= link_to "ALL", team_tasks_path(@team, view: "all"), class: "item" %>
   <%= link_to "INCOMPLETE", team_tasks_path(@team, view: "incomplete"), class: "item" %>
@@ -10,18 +10,14 @@
 </div>
 
 <div class="ui divider"></div>
-
-
-
 <div class="ui relaxed celled list">
 
-
-  <!-- task list -->
+  <!-- TASK LIST -->
   <%= render @tasks %>
+  
   <div class="ui divider"></div>
 
-
-    <!-- new task form -->
+    <!-- NEW TASK FORM -->
     <div class="item">
       <br>
       <div class="content">
