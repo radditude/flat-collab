@@ -1,5 +1,6 @@
 <%= form_for [@team, @task], :html => {:class => "ui form"} do |f| %>
   <div class="field">
+    <%= f.label :name, "Name:" %>
     <%= f.text_field :name, :placeholder => (@task.errors.full_messages_for(:name).first || "do all the things") %>
   </div>
   <div class="field">
