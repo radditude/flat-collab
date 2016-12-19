@@ -10,7 +10,7 @@
   <body>
     <!-- navbar -->
     <%= render 'layouts/navigation' %>
-    
+
     <% if logged_in %>
       <div class="ui text container" id="text-container">
         <div class="ui very padded segment">
@@ -18,13 +18,13 @@
           <%= yield %>
         </div>
       </div>
-      
+
     <% else %>
       <div class="ui text container vertical-space" id="text-container">
         <%= render 'layouts/messages' %>
         <%= yield %>
       </div>
     <% end %>
-    
+
   </body>
 </html>
