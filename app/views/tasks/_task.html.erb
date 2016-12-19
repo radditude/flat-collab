@@ -2,41 +2,50 @@
   <br>
   <div class="content">
 
-    <!-- buttons -->
+    <!-- BUTTONS -->
     <div class="floating">
+      
+      <!-- complete button -->
       <% if task.assigned_to?(current_user) && !task.complete? %>
         <%= render partial: 'complete_button', locals: {team: @team, task: task} %>
+      
+      <!-- completed! -->
       <% elsif task.complete? %>
         <button class="mini ui green button">Completed!</button>
+      
       <% elsif !task.users.empty? %>
         <!-- shows nothing if task doesn't belong to user -->
+      
+      <!-- claim task button -->
       <% else %>
         <%= render partial: 'claim_button', locals: {team: @team, task: task} %>
       <% end %>
 
-      <!-- edit task button -->
+      <!-- edit button -->
       <%= link_to edit_team_task_path(@team, task), id: "edit_#{task.id}" do %>
         <%= button_tag "Edit", class: "mini ui white icon button" do %>
           <i class="edit icon"></i>
         <% end %>
       <% end %>
 
-      <!-- delete task button -->
+      <!-- delete button -->
       <%= form_tag team_task_path(@team, task), method: "delete", class: "ui inline form" do %>
         <%= button_tag "Delete", class: "mini ui red icon button", id: "delete_#{task.id}" do %>
             <i class="remove icon"></i>
         <% end %>
       <% end %>
     </div>
+    
 
-    <!-- task content -->
+    <!-- TASK CONTENT -->
     <div class="caps small-header"><%= task.name %>
-      <% if !task.users.empty? %>
-         &mdash; <%= task.users.pluck(:name).to_sentence %>
+      <% if task.claimed %>
+         &mdash; <%= task.display_users %>
       <% end %>
     </div>
+    
     <span class="blue-text"><%= task.notes %></span>
-    <p class="small italic">Updated <%= task.updated_at.strftime("%A, %B %e") %></p>
+    <p class="small italic">Updated <%= show_updated_at(task) %></p>
   </div>
   <br>
 </div>

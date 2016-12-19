@@ -5,7 +5,7 @@
     <!-- CONTENT -->
     <div class="header"><%= pair_request.user.name %> is looking for a parter for <%= pair_request.project %></div><br>
     <%= pair_request.info %>
-    <p class="small italic">Posted <%= pair_request.updated_at.strftime("%A, %B %e") %></p>
+    <p class="small italic">Posted <%= show_updated_at(pair_request) %></p>
     
     <!-- BUTTONS -->
     <% if pair_request.user.id == current_user.id %>
