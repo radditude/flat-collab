@@ -1,12 +1,18 @@
 <div class="item">
   <br>
   <div class="content">
+    
+    <!-- CONTENT -->
     <div class="header"><%= pair_request.user.name %> is looking for a parter for <%= pair_request.project %></div><br>
     <%= pair_request.info %>
     <p class="small italic">Posted <%= pair_request.updated_at.strftime("%A, %B %e") %></p>
+    
+    <!-- BUTTONS -->
     <% if pair_request.user.id == current_user.id %>
         <%= button_to "Mark Inactive", pair_request_path(pair_request), method: "patch", class: "small ui red button" %>
     <% else %>
+    
+      <!-- join team button -->
       <%= form_for Team.new, :html => {:class => "ui form"} do |f| %>
         <%= hidden_field_tag :"pair_request[id]", pair_request.id %>
 
@@ -16,6 +22,7 @@
         <%= hidden_field_tag :"team[user_ids][]", current_user.id %>
         <%= f.submit "Join Team!", class: "small ui blue button" %>
       <% end %>
+      
     <% end %>
   </div>
   <br>
