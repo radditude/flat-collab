@@ -14,7 +14,7 @@
 
   <!-- TASK LIST -->
   <%= render @tasks %>
-  
+
   <div class="ui divider"></div>
 
     <!-- NEW TASK FORM -->
@@ -25,6 +25,11 @@
         <%= render 'form' %>
       </div>
       <br>
+
     </div>
+
+    <div class="ui divider"></div>
+
+    <%= link_to "Leave Team", edit_team_path(@team), class: "mini ui fluid basic button", id: "leave-team" %>
 
 </div>
