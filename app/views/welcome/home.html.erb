@@ -1,11 +1,14 @@
 <div class="content center">
 
   <h1>Welcome to FlatCollab!</h1>
-  
-  <% if !logged_in %>
-    <%= link_to "Sign Up", new_user_registration_path, :class => "ui button" %>
-    <%= link_to "Sign In", new_user_session_path, :class => "ui button" %>
-    <%= link_to "Sign In with Github", user_github_omniauth_authorize_path, :class => "ui button" %>
-  <% end %>
+
+  <p>
+    FlatCollab is an app for Flatiron students working on group projects. Find a partner, then use FlatCollab's shared task lists to collaborate on your project.
+  </p>
+
+  <%= link_to "Sign Up", new_user_registration_path, :class => "ui button" %>
+  <%= link_to "Sign In", new_user_session_path, :class => "ui button" %>
+  <%= link_to "Sign In with Github", user_github_omniauth_authorize_path, :class => "ui button" %>
+
 
 </div>
