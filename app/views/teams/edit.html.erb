@@ -1,0 +1,7 @@
+<h1>Did you mean to hit that button?</h1>
+<br>
+<%= link_to "No, I want to go back", team_tasks_path(@team), class: "ui blue fluid button" %>
+<br>
+<%= form_tag team_path(@team), method: "patch", class: "ui inline form" do %>
+  <%= submit_tag "Yes, remove me from the team", class: "ui red fluid button", id: "really-leave" %>
+<% end %>

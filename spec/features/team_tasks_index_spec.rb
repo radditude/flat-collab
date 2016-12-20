@@ -80,4 +80,10 @@ RSpec.describe "team tasks index page", type: :feature do
     expect(page).not_to have_content("test the tests")
   end
 
+  it 'can leave a team' do
+    click_link "leave-team"
+    click_button "really-leave"
+    expect(page).to have_current_path(root_path)
+  end
+
 end
