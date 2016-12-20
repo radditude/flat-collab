@@ -1,18 +1,15 @@
 <div class="content center">
 
-  <h1>Welcome to FlatCollab!</h1>
+  <h1 id="welcome-text">Welcome to FlatCollab!</h1>
 
-  <p>
-    <span class="blue-text">FlatCollab is an app for Flatiron students working on group projects.</span>
+  <p class="small-header">
+    <span class="blue-text italic">FlatCollab is an app for Flatiron students working on group projects.<br>
+       Find a partner through the bulletin board on the front page, <br>then use FlatCollab's shared task lists to collaborate!</span>
   </p>
 
-  <p>
-    <span class="blue-text">Find a partner through the bulletin board on the front page, then use FlatCollab's shared task lists to collaborate on your project!</span>
-  </p>
-
-  <%= link_to "Sign Up", new_user_registration_path, :class => "ui button" %>
-  <%= link_to "Sign In", new_user_session_path, :class => "ui button" %>
-  <%= link_to "Sign In with Github", user_github_omniauth_authorize_path, :class => "ui button" %>
-
-
+  <div class="small-space">
+    <%= link_to "Sign Up", new_user_registration_path, :class => "ui button" %>
+    <%= link_to "Sign In", new_user_session_path, :class => "ui button" %>
+    <%= link_to "Sign In with Github", user_github_omniauth_authorize_path, :class => "ui button" %>
+  </div>
 </div>
