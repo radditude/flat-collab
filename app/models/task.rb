@@ -5,6 +5,7 @@ class Task < ApplicationRecord
   belongs_to :team
   has_many :user_tasks
   has_many :users, through: :user_tasks
+  has_many :comments
 
   scope :incomplete, -> { where("status < 2")}
   scope :persisted, -> { where "id IS NOT NULL" }
@@ -27,11 +28,11 @@ class Task < ApplicationRecord
     self.status = "claimed"
     self.save
   end
-  
+
   def claimed
     !self.users.empty?
   end
-  
+
   def display_users
     self.users.pluck(:name).to_sentence
   end

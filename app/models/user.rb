@@ -12,6 +12,7 @@ class User < ApplicationRecord
   has_many :teams, through: :user_teams
   has_many :user_tasks
   has_many :tasks, through: :user_tasks
+  has_many :comments, through: :tasks
 
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
