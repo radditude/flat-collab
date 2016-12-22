@@ -3,7 +3,9 @@ Rails.application.routes.draw do
   root 'welcome#home'
 
   resources :teams do
-    resources :tasks
+    resources :tasks do
+      resources :comments, only: [:create]
+    end
   end
 
   patch '/teams/:team_id/tasks/:id/claim', to: "tasks#claim", as: "claim_task"

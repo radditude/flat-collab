@@ -48,6 +48,20 @@
     </div>
 
     <span class="blue-text"><%= task.notes %></span>
+    <% if !task.comments.empty? %>
+      <ul>
+
+        <% task.comments.each do |comment| %>
+          <li><%= comment.content %></li>
+        <% end %>
+
+      </ul>
+    <% end %>
+
+    <%= form_tag team_task_comments_path(@team, task), method: "post", class: "ui inline form" do %>
+      <%= text_field_tag :content %>
+      <%= submit_tag %>
+    <% end %>
     <div class="small italic">Updated <%= show_updated_at(task) %></div>
   </div>
   <br>
