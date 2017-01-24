@@ -1,4 +1,11 @@
 class TeamsController < ApplicationController
+  before_action :user_logged_in?
+
+  def index
+    @teams = current_user.teams
+    render json: @teams
+  end
+
   def create
     @request = PairRequest.find(params[:id])
     @team = Team.create_from_pair_request(@request, current_user)

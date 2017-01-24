@@ -14,7 +14,7 @@ Rails.application.routes.draw do
 
   post '/pair_requests/:id/create-team', to: "teams#create", as: "create_team"
 
-  resources :pair_requests, only: [:create, :update, :destroy]
+  resources :pair_requests, only: [:index, :create, :update, :destroy]
 
   devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
 
