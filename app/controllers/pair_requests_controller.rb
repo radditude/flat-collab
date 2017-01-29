@@ -1,9 +1,14 @@
 class PairRequestsController < ApplicationController
   before_action :user_logged_in?
 
+  def index
+    @requests = PairRequest.all.where(status: "active").persisted.order("created_at DESC")
+    render json: @requests
+  end
+
   def create
     @request = current_user.pair_requests.new(pair_request_params)
-    
+
     if @request.save
       redirect_to root_path
     else
@@ -29,7 +34,7 @@ class PairRequestsController < ApplicationController
   def current_pair_request
     PairRequest.find(params[:id])
   end
-  
+
   def pair_request_params
     params.require(:pair_request).permit(:project, :info)
   end
