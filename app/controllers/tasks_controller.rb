@@ -4,13 +4,18 @@ class TasksController < ApplicationController
   def index
     @team = current_team
     @task = Task.new
-    
+
     if view_incomplete
       @tasks = current_team.tasks.incomplete
     elsif view_my_tasks
       @tasks = current_user.tasks.where("team_id = ?", current_team.id)
     else
       @tasks = current_team.tasks.persisted
+    end
+
+    respond_to do |f|
+      f.html { render :index }
+      f.json { render json: @tasks, each_serializer: TaskIndexSerializer }
     end
   end
 
@@ -25,6 +30,11 @@ class TasksController < ApplicationController
       @tasks = @team.tasks.persisted
       render :index
     end
+  end
+
+  def show
+    @task = current_task
+    render json: @task
   end
 
   def claim
@@ -60,11 +70,11 @@ class TasksController < ApplicationController
   def view
     params[:view]
   end
-  
+
   def view_incomplete
     view == "incomplete"
   end
-  
+
   def view_my_tasks
     view == "my_tasks"
   end
