@@ -7,14 +7,15 @@ class PairRequestsController < ApplicationController
   end
 
   def create
-    @request = current_user.pair_requests.new(pair_request_params)
+    @request = current_user.pair_requests.create(pair_request_params)
+    render json: @request
 
-    if @request.save
-      redirect_to root_path
-    else
-      @requests = PairRequest.all.where(status: "active").persisted
-      render 'index'
-    end
+    # if @request.save
+    #   redirect_to root_path
+    # else
+    #   @requests = PairRequest.all.where(status: "active").persisted
+    #   render 'index'
+    # end
   end
 
   def update
