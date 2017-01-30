@@ -2,7 +2,7 @@ class PairRequestsController < ApplicationController
   before_action :user_logged_in?
 
   def index
-    @requests = PairRequest.all.where(status: "active").persisted.order("created_at DESC")
+    @requests = PairRequest.all.where(status: "active").persisted.order("created_at ASC")
     render json: @requests
   end
 
