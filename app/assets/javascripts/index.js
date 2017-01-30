@@ -61,8 +61,11 @@ let submitPRForm = function() {
 let joinButton = function() {
   $("#pairRequests").on("click", ".js-join", function() {
     var id = $(this).data("id");
-    console.log(id);
-    // $.post("/teams", )
+    var url = `/pair_requests/${id}/create-team`;
+    var postRequest = $.post(url);
+    postRequest.done(function(data) {
+      $(document).html(data);
+    })
   })
 }
 
