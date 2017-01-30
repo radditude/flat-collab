@@ -1,3 +1,5 @@
+/* global $ */
+
 $(document).ready(function() {
   loadPairRequests();
   attachListeners();
@@ -25,7 +27,7 @@ class PairRequest {
 
   joinButton() {
     // TODO: render button as "mark inactive" if pair request belongs to user
-    return `<button class="js-join small ui blue button" data-id="join-${this.id}">Join Team!</button>`
+    return `<button class="js-join small ui blue button" data-id="${this.id}">Join Team!</button>`
   }
 
   formatHTML() {
@@ -43,8 +45,8 @@ let loadPairRequests = function() {
   })
 }
 
-let submitForm = function() {
-  $("form").submit(function(e) {
+let submitPRForm = function() {
+  $("#newPairRequest").submit(function(e) {
     e.preventDefault();
     var values = $(this).serialize();
     var postRequest = $.post("/pair_requests", values);
@@ -56,8 +58,16 @@ let submitForm = function() {
   });
 }
 
+let joinButton = function() {
+  $("#pairRequests").on("click", ".js-join", function() {
+    var id = $(this).data("id");
+    console.log(id);
+    // $.post("/teams", )
+  })
+}
+
 
 let attachListeners = function() {
-  submitForm();
+  submitPRForm();
   joinButton();
 }

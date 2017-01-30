@@ -16,6 +16,11 @@
         <div class="ui very padded segment">
           <%= render 'layouts/messages' %>
           <%= yield %>
+          <script>
+            window.currentUser = {
+              id: <%= current_user.id %>
+            }
+          </script>
         </div>
       </div>
 

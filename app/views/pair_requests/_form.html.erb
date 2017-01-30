@@ -2,7 +2,7 @@
   <br>
   <div class="content">
     <div class="header">Add a new listing:</div><br>
-    <%= form_for @request, :html => {:class => "ui form"} do |f| %>
+    <%= form_for @request, :html => {:class => "ui form", :id => "newPairRequest"} do |f| %>
       <div class="field">
         <%= f.label :project, "Name of Project" %>
         <%= f.text_field :project, :placeholder => (@request.errors.full_messages_for(:project).first || "The best app evar" ) %>
