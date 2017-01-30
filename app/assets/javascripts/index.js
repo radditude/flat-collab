@@ -22,12 +22,12 @@ class PairRequest {
     return `${this.info}`;
   }
 
-  formatHTML() {
-    return `<div class="item"><br><div class="content">${this.formatTitle()} ${this.formatInfo()} ${this.postedAt()}</div><br></div>`;
+  joinButton() {
+    return `<button class="small ui blue button" data-id="${this.id}">Join Team!</button>`
   }
 
-  joinButton() {
-    
+  formatHTML() {
+    return `<div class="item"><br><div class="content">${this.formatTitle()} ${this.formatInfo()} ${this.postedAt()} ${this.joinButton()}</div><br></div>`;
   }
 }
 
