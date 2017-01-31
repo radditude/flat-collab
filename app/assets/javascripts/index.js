@@ -25,13 +25,17 @@ class PairRequest {
     return `${this.info}`;
   }
 
-  joinButton() {
+  loadButton() {
     // TODO: render button as "mark inactive" if pair request belongs to user
-    return `<button class="js-join small ui blue button" data-id="${this.id}">Join Team!</button>`
+    if (currentUser.id === this.user.id) {
+      return `<button class="js-inactive small ui red button" data-id="${this.id}">Mark Inactive</button>`;
+    } else {
+      return `<button class="js-join small ui blue button" data-id="${this.id}">Join Team!</button>`;
+    }
   }
 
   formatHTML() {
-    return `<div class="item"><br><div class="content">${this.formatTitle()} ${this.formatInfo()} ${this.postedAt()} ${this.joinButton()}</div><br></div>`;
+    return `<div class="item" id="pr-${this.id}"><br><div class="content">${this.formatTitle()} ${this.formatInfo()} ${this.postedAt()} ${this.loadButton()}</div><br></div>`;
   }
 }
 
@@ -64,7 +68,8 @@ let joinButton = function() {
     var url = `/pair_requests/${id}/create-team`;
     var postRequest = $.post(url);
     postRequest.done(function(data) {
-      $(document).html(data);
+      var team = data.team;
+      $("#htmlGoesHere").load(`/teams/${team.id}/tasks #htmlGoesHere`)
     })
   })
 }
