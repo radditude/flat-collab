@@ -28,7 +28,7 @@ class PairRequest {
   loadButton() {
     // TODO: render button as "mark inactive" if pair request belongs to user
     if (currentUser.id === this.user.id) {
-      return `<button class="js-inactive small ui red button" data-id="${this.id}">Mark Inactive</button>`;
+      return `<button class="js-mark small ui red button" data-id="${this.id}">Mark Inactive</button>`;
     } else {
       return `<button class="js-join small ui blue button" data-id="${this.id}">Join Team!</button>`;
     }
@@ -69,7 +69,20 @@ let joinButton = function() {
     var postRequest = $.post(url);
     postRequest.done(function(data) {
       var team = data.team;
-      $("#htmlGoesHere").load(`/teams/${team.id}/tasks #htmlGoesHere`)
+      $("#htmlGoesHere").load(`/teams/${team.id}/tasks #htmlGoesHere`);
+    })
+  })
+}
+
+let markInactiveButton = function() {
+  $("#pairRequests").on("click", ".js-mark", function() {
+    var id = $(this).data("id");
+    var url = `/pair_requests/${id}`;
+    $.ajax({
+      url: url,
+      method: "PATCH"
+    }).done(function() {
+      $(`#pr-${id}`).hide(500);
     })
   })
 }
@@ -78,4 +91,5 @@ let joinButton = function() {
 let attachListeners = function() {
   submitPRForm();
   joinButton();
+  markInactiveButton();
 }

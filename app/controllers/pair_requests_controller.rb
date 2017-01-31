@@ -21,7 +21,7 @@ class PairRequestsController < ApplicationController
   def update
     @request = current_pair_request
     @request.mark_inactive
-    redirect_to root_path
+    # redirect_to root_path
   end
 
   def destroy
