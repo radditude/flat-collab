@@ -1,13 +1,14 @@
 /* global $ */
 
 $(document).ready(function() {
+  loadTeamsMenu();
   loadPairRequests();
   attachListeners();
 })
 
 class PairRequest {
   constructor(data) {
-    Object.assign(this, data)
+    Object.assign(this, data);
   }
 
   postedAt() {
@@ -39,13 +40,34 @@ class PairRequest {
   }
 }
 
+class Team {
+  constructor(data) {
+    Object.assign(this, data);
+  }
+
+  formatHTML() {
+    return `<a class="item js-team" href="#" data-id="${this.id}">${this.name}</a>`;
+  }
+
+}
+
 let loadPairRequests = function() {
-  $.get("/pair_requests", function(data){
+  $.get("/pair_requests", function(data) {
     var posts = data.pair_requests;
     $(posts).each(function(index, post) {
       var thisPost = new PairRequest(post);
       $("#pairRequests").prepend(thisPost.formatHTML());
     });
+  })
+}
+
+let loadTeamsMenu = function() {
+  $.get("/teams", function(data) {
+    var teams = data.teams;
+    $(teams).each(function(index, team) {
+      var theTeam = new Team(team);
+      $("#teamsMenu").append(theTeam.formatHTML());
+    })
   })
 }
 
@@ -68,9 +90,21 @@ let joinButton = function() {
     var url = `/pair_requests/${id}/create-team`;
     var postRequest = $.post(url);
     postRequest.done(function(data) {
-      var team = data.team;
-      $("#htmlGoesHere").load(`/teams/${team.id}/tasks #htmlGoesHere`);
+      var id = data.team.id;
+      loadTeamTasks(team);
     })
+  })
+}
+
+let loadTeamTasks = function(teamId) {
+  $("#htmlGoesHere").load(`/teams/${teamId}/tasks #htmlGoesHere`);
+}
+
+let teamMenuItems = function() {
+  $("#teamsMenu").on("click", ".js-team", function(e) {
+    e.preventDefault();
+    var id = $(this).data("id");
+    loadTeamTasks(id);
   })
 }
 
@@ -87,9 +121,16 @@ let markInactiveButton = function() {
   })
 }
 
+let dropdownMenu = function() {
+  $('.menu > .ui.dropdown').click(function() {
+    $(this).dropdown();
+  })
+}
 
 let attachListeners = function() {
   submitPRForm();
   joinButton();
   markInactiveButton();
+  dropdownMenu();
+  teamMenuItems();
 }
