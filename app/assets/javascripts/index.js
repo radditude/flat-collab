@@ -6,6 +6,7 @@ $(document).ready(function() {
   attachListeners();
 })
 
+// ES6 syntax
 class PairRequest {
   constructor(data) {
     Object.assign(this, data);
