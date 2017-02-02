@@ -3,11 +3,17 @@
 var currentTeam;
 
 let loadTeamTasks = function(teamId) {
+  
   var url = `/teams/${teamId}/tasks`
   $("#text-container").load(url + " #htmlGoesHere", function() {
+      currentTeam = teamId;
       loadTaskList(url);
+      attachTeamTasksListeners();
   });
-  var currentTeam = teamId;
+}
+
+let attachTeamTasksListeners = function() {
+    submitTaskForm();
 }
 
 let loadTaskList = function(url) {
@@ -28,7 +34,7 @@ function Task(data) {
 
 Task.prototype.getUsers = function() {
     if (this.users.length === 2) {
-        return ` &mdash ${this.users[0].name} & ${this.users[1].name}`;
+        return ` &mdash; ${this.users[0].name} & ${this.users[1].name}`;
     } else if (this.users.length === 1) {
         return ` &mdash; ${this.users[0].name}`;
     } else {
@@ -52,19 +58,20 @@ let submitTaskForm = function() {
   $("#newTaskForm").submit(function(e) {
     e.preventDefault();
     var values = $(this).serialize();
-    $.ajax({
-      url: `/teams/${currentTeam}/tasks`,
-      method: "POST",
-      data: values
-    }).done(function(data) {
-      console.log(data);
-    })
-    // var postRequest = $.post(`/teams/${currentTeam}/tasks`, values);
-    // postRequest.done(function(data) {
-    //     console.log(data);
-    // //   var thisTask = new Task(data.task);
-    // //   $("#pairRequests").prepend(thisTask.formatHTML());
-    // });
-    // this.reset();
+    // $.ajax({
+    //   url: `/teams/${currentTeam}/tasks`,
+    //   method: "POST",
+    //   data: values
+    // }).done(function(data) {
+    //   var thisTask = new Task(data.task);
+    //   $("#tasksGoHere").prepend(thisTask.formatHTML());
+    // })
+    var postRequest = $.post(`/teams/${currentTeam}/tasks`, values);
+    postRequest.done(function(data) {
+        console.log(data);
+      var thisTask = new Task(data.task);
+      $("#tasksGoHere").prepend(thisTask.formatHTML());
+    });
+    this.reset();
   });
 }
