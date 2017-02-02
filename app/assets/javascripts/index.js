@@ -131,4 +131,5 @@ let attachListeners = function() {
   markInactiveButton();
   dropdownMenu();
   teamMenuItems();
+  submitTaskForm();
 }
