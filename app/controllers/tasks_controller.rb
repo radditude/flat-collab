@@ -28,13 +28,16 @@ class TasksController < ApplicationController
     @team = current_team
     @task = @team.tasks.new(task_params)
     @task.status = "claimed" unless @task.users.empty?
+    @task.save
+    
+    render json: @task
 
-    if @task.save
-      redirect_to team_tasks_path(@team)
-    else
-      @tasks = @team.tasks.persisted
-      render :index
-    end
+    # if @task.save
+    #   redirect_to team_tasks_path(@team)
+    # else
+    #   @tasks = @team.tasks.persisted
+    #   render :index
+    # end
   end
 
   def show

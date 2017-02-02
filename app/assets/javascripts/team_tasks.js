@@ -52,11 +52,19 @@ let submitTaskForm = function() {
   $("#newTaskForm").submit(function(e) {
     e.preventDefault();
     var values = $(this).serialize();
-    var postRequest = $.post("/teams//tasks", values);
-    postRequest.done(function(data) {
-      var thisPost = new PairRequest(data.pair_request);
-      $("#pairRequests").prepend(thisPost.formatHTML());
-    });
-    this.reset();
+    $.ajax({
+      url: `/teams/${currentTeam}/tasks`,
+      method: "POST",
+      data: values
+    }).done(function(data) {
+      console.log(data);
+    })
+    // var postRequest = $.post(`/teams/${currentTeam}/tasks`, values);
+    // postRequest.done(function(data) {
+    //     console.log(data);
+    // //   var thisTask = new Task(data.task);
+    // //   $("#pairRequests").prepend(thisTask.formatHTML());
+    // });
+    // this.reset();
   });
 }
