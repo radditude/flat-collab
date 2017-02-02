@@ -2,6 +2,8 @@ Rails.application.routes.draw do
 
   root 'welcome#home'
 
+  get '/teams/:team_id/tasks/load', to: "tasks#load"
+
   resources :teams do
     resources :tasks do
       resources :comments, only: [:create]

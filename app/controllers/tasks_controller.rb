@@ -5,18 +5,23 @@ class TasksController < ApplicationController
     @team = current_team
     @task = Task.new
 
-    if view_incomplete
-      @tasks = current_team.tasks.incomplete
-    elsif view_my_tasks
-      @tasks = current_user.tasks.where("team_id = ?", current_team.id)
-    else
-      @tasks = current_team.tasks.persisted
-    end
+    # if view_incomplete
+    #   @tasks = current_team.tasks.incomplete
+    # elsif view_my_tasks
+    #   @tasks = current_user.tasks.where("team_id = ?", current_team.id)
+    # else
+    #   @tasks = current_team.tasks.persisted
+    # end
+    #
+    # respond_to do |f|
+    #   f.html { render :index }
+    #   f.json { render json: @tasks, each_serializer: TaskIndexSerializer }
+    # end
+  end
 
-    respond_to do |f|
-      f.html { render :index }
-      f.json { render json: @tasks, each_serializer: TaskIndexSerializer }
-    end
+  def load
+    @tasks = current_team.tasks.persisted
+    render json: @tasks, each_serializer: TaskIndexSerializer
   end
 
   def create
