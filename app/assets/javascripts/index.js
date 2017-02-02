@@ -96,9 +96,6 @@ let joinButton = function() {
   })
 }
 
-let loadTeamTasks = function(teamId) {
-  $("#htmlGoesHere").load(`/teams/${teamId}/tasks #htmlGoesHere`);
-}
 
 let teamMenuItems = function() {
   $("#teamsMenu").on("click", ".js-team", function(e) {
