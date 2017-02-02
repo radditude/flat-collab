@@ -4,13 +4,15 @@
 
 <!-- TOGGLE MENU -->
 <div class="ui three item menu" id="menu">
-  <%= link_to "ALL", team_tasks_path(@team, view: "all"), class: "item" %>
-  <%= link_to "INCOMPLETE", team_tasks_path(@team, view: "incomplete"), class: "item" %>
-  <%= link_to "MY TASKS", team_tasks_path(@team, view: "my_tasks"), class: "item" %>
+  <%= link_to "ALL", "#", class: "item", id: "allTasks" %>
+  <%= link_to "INCOMPLETE", "#", class: "item", id: "incompleteTasks" %>
+  <%= link_to "MY TASKS", "#", class: "item", id: "myTasks" %>
 </div>
 
-<div class="ui divider"></div>
-<div class="ui relaxed celled list" id="tasksGoHere">
+<div class="ui relaxed celled list">
+  <div id="tasksGoHere">
+    
+  </div>
 
   <!-- TASK LIST -->
   <%#= render @tasks %>

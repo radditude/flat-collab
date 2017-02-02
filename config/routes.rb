@@ -3,6 +3,10 @@ Rails.application.routes.draw do
   root 'welcome#home'
 
   get '/teams/:team_id/tasks/load', to: "tasks#load"
+  
+  get '/teams/:team_id/tasks/incomplete', to: "tasks#incomplete"
+  
+  get '/teams/:team_id/tasks/user_tasks', to: "tasks#user_tasks"
 
   resources :teams do
     resources :tasks do

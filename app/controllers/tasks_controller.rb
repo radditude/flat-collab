@@ -23,7 +23,17 @@ class TasksController < ApplicationController
     @tasks = current_team.tasks.persisted
     render json: @tasks, each_serializer: TaskIndexSerializer
   end
-
+  
+  def incomplete
+    @tasks = current_team.tasks.incomplete
+    render json: @tasks, each_serializer: TaskIndexSerializer
+  end
+  
+  def user_tasks
+    @tasks = current_user.tasks.where("team_id = ?", current_team.id)
+    render json: @tasks, each_serializer: TaskIndexSerializer
+  end
+    
   def create
     @team = current_team
     @task = @team.tasks.new(task_params)

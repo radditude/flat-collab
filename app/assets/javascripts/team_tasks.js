@@ -14,6 +14,9 @@ let loadTeamTasks = function(teamId) {
 
 let attachTeamTasksListeners = function() {
     submitTaskForm();
+    myTasksButton();
+    incompleteTasksButton();
+    allTasksButton();
 }
 
 let loadTaskList = function(url) {
@@ -58,20 +61,50 @@ let submitTaskForm = function() {
   $("#newTaskForm").submit(function(e) {
     e.preventDefault();
     var values = $(this).serialize();
-    // $.ajax({
-    //   url: `/teams/${currentTeam}/tasks`,
-    //   method: "POST",
-    //   data: values
-    // }).done(function(data) {
-    //   var thisTask = new Task(data.task);
-    //   $("#tasksGoHere").prepend(thisTask.formatHTML());
-    // })
     var postRequest = $.post(`/teams/${currentTeam}/tasks`, values);
     postRequest.done(function(data) {
-        console.log(data);
       var thisTask = new Task(data.task);
       $("#tasksGoHere").prepend(thisTask.formatHTML());
     });
     this.reset();
   });
+}
+
+let myTasksButton = function() {
+    $("#myTasks").click(function(e) {
+        e.preventDefault();
+        $.get(`/teams/${currentTeam}/tasks/user_tasks`, function(data) {
+            $("#tasksGoHere").empty();
+            $(data.tasks).each(function(index, task) {
+                var thisTask = new Task(task);
+                $("#tasksGoHere").prepend(thisTask.formatHTML());
+            })
+        })
+    })
+}
+
+let incompleteTasksButton = function() {
+    $("#incompleteTasks").click(function(e) {
+        e.preventDefault();
+        $.get(`/teams/${currentTeam}/tasks/incomplete`, function(data) {
+            $("#tasksGoHere").empty();
+            $(data.tasks).each(function(index, task) {
+                var thisTask = new Task(task);
+                $("#tasksGoHere").prepend(thisTask.formatHTML());
+            })
+        })
+    })
+}
+
+let allTasksButton = function() {
+    $("#allTasks").click(function(e) {
+        e.preventDefault();
+        $.get(`/teams/${currentTeam}/tasks`, function(data) {
+            $("#tasksGoHere").empty();
+            $(data.tasks).each(function(index, task) {
+                var thisTask = new Task(task);
+                $("#tasksGoHere").prepend(thisTask.formatHTML());
+            })
+        })
+    })
 }
