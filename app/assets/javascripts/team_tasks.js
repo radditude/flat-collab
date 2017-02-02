@@ -2,15 +2,18 @@
 
 let loadTeamTasks = function(teamId) {
   var url = `/teams/${teamId}/tasks`
-  $("#htmlGoesHere").load(url + " #htmlGoesHere");
-  loadTaskList(url);
+  $("#text-container").load(url + " #htmlGoesHere", function() {
+      loadTaskList(url);
+  })
 }
 
 let loadTaskList = function(url) {
   $.get(url + "/load", function(response) {
     $(response.tasks).each(function(index, task) {
         var thisTask = new Task(task);
-        console.log(thisTask);
+        var html = thisTask.formatHTML();
+        // debugger;
+        $("#tasksGoHere").prepend(html);
     })
   })
 }
@@ -28,4 +31,12 @@ Task.prototype.getUsers = function() {
     } else {
         return undefined;
     }
+}
+
+Task.prototype.formatName = function() {
+    return `<div class="caps small-header">${this.name} &mdash; ${this.getUsers()}</div>`;
+}
+
+Task.prototype.formatHTML = function() {
+    return `<div class="item"><br><div class="content">${this.formatName()}</div><br></div>`;
 }
