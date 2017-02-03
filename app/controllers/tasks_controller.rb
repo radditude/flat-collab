@@ -23,23 +23,23 @@ class TasksController < ApplicationController
     @tasks = current_team.tasks.persisted
     render json: @tasks, each_serializer: TaskIndexSerializer
   end
-  
+
   def incomplete
     @tasks = current_team.tasks.incomplete
     render json: @tasks, each_serializer: TaskIndexSerializer
   end
-  
+
   def user_tasks
     @tasks = current_user.tasks.where("team_id = ?", current_team.id)
     render json: @tasks, each_serializer: TaskIndexSerializer
   end
-    
+
   def create
     @team = current_team
     @task = @team.tasks.new(task_params)
     @task.status = "claimed" unless @task.users.empty?
     @task.save
-    
+
     render json: @task
 
     # if @task.save
@@ -80,7 +80,7 @@ class TasksController < ApplicationController
 
   def destroy
     current_task.destroy
-    redirect_to team_tasks_path(current_team)
+    # redirect_to team_tasks_path(current_team)
   end
 
   private
