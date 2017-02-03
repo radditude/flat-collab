@@ -3,7 +3,6 @@
 var currentTeam;
 
 let loadTeamTasks = function(teamId) {
-
   var url = `/teams/${teamId}/tasks`
   $("#text-container").load(url + " #htmlGoesHere", function() {
       currentTeam = teamId;
@@ -13,6 +12,7 @@ let loadTeamTasks = function(teamId) {
 }
 
 let attachTeamTasksListeners = function() {
+    deleteTaskButtons();
     submitTaskForm();
     myTasksButton();
     incompleteTasksButton();
@@ -71,7 +71,7 @@ Task.prototype.formatNotes = function() {
 }
 
 Task.prototype.formatHTML = function() {
-    return `<div class="item"><br><div class="content">${this.formatButtons()}${this.formatName()}${this.formatNotes()}</div><br></div>`;
+    return `<div class="item" id="task${this.id}"><br><div class="content">${this.formatButtons()}${this.formatName()}${this.formatNotes()}</div><br></div>`;
 }
 
 let submitTaskForm = function() {
@@ -124,4 +124,17 @@ let allTasksButton = function() {
             })
         })
     })
+}
+
+let deleteTaskButtons = function() {
+  $("#tasksGoHere").on("click", ".delete", function() {
+    var id = $(this).data("id");
+    var url = `/teams/${currentTeam}/tasks/${id}`;
+    $.ajax({
+      url: url,
+      method: "DELETE"
+    }).done(function() {
+      $(`#task${id}`).hide(500);
+    });
+  });
 }
