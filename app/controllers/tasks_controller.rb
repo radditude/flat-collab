@@ -62,7 +62,7 @@ class TasksController < ApplicationController
 
   def complete
     current_task.complete_task
-    redirect_to team_tasks_path(current_team)
+    # redirect_to team_tasks_path(current_team)
   end
 
   def edit
