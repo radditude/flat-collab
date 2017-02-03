@@ -3,7 +3,7 @@
 var currentTeam;
 
 let loadTeamTasks = function(teamId) {
-  
+
   var url = `/teams/${teamId}/tasks`
   $("#text-container").load(url + " #htmlGoesHere", function() {
       currentTeam = teamId;
@@ -58,15 +58,15 @@ Task.prototype.formatHTML = function() {
 }
 
 let submitTaskForm = function() {
-  $("#newTaskForm").submit(function(e) {
+  $("#submitTaskForm").click(function(e) {
     e.preventDefault();
-    var values = $(this).serialize();
+    var values = $("form#newTaskForm").serialize();
     var postRequest = $.post(`/teams/${currentTeam}/tasks`, values);
     postRequest.done(function(data) {
       var thisTask = new Task(data.task);
       $("#tasksGoHere").prepend(thisTask.formatHTML());
+      $("form#newTaskForm")[0].reset();
     });
-    this.reset();
   });
 }
 
