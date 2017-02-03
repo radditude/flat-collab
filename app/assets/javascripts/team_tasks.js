@@ -29,8 +29,10 @@ let loadTaskList = function(url) {
   });
 }
 
-// object constructor + methods without using ES6 class syntax
+// written (almost) without using ES6 class syntax
+// (more or less just to prove it works)
 function Task(data) {
+    // yeah, I know, this is ES6 syntax
     Object.assign(this, data);
 }
 
@@ -54,12 +56,36 @@ Task.prototype.belongsToUser = function() {
   return false;
 }
 
+Task.prototype.chooseButtonType = function() {
+  if (this.belongsToUser() && this.status !== "complete") {
+    return this.completeButton();
+  } else if (this.status === "complete") {
+    return this.completedTask();
+  } else if (this.users.length > 0) {
+    return "";
+  } else {
+    return this.claimButton();
+  }
+}
+
+Task.prototype.completeButton = function() {
+  return `<button class="mini ui complete blue button" data-id="${this.id}">Mark Complete</button>`;
+}
+
+Task.prototype.completedTask = function() {
+  return `<button class="mini ui completed green button" data-id="${this.id}">Completed!</button>`;
+}
+
+Task.prototype.claimButton = function() {
+  return `<button class="mini ui claim yellow button" data-id="${this.id}">Claim Task</button>`;
+}
+
 Task.prototype.deleteButton = function() {
-  return `<button class="mini ui delete red icon button" data-id="${this.id}"><i class="remove icon"></i></button>`
+  return `<button class="mini ui delete red icon button" data-id="${this.id}"><i class="remove icon"></i></button>`;
 }
 
 Task.prototype.formatButtons = function() {
-  return `<div class="floating">${this.deleteButton()}</div>`
+  return `<div class="floating">${this.chooseButtonType()}${this.deleteButton()}</div>`;
 }
 
 Task.prototype.formatName = function() {
