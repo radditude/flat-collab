@@ -23,7 +23,6 @@ let loadTaskList = function(url) {
   $.get(url + "/load", function(response) {
     $(response.tasks).each(function(index, task) {
         var thisTask = new Task(task);
-        console.log(thisTask.belongsToUser());
         var html = thisTask.formatHTML();
         $("#tasksGoHere").prepend(html);
     });
@@ -55,6 +54,14 @@ Task.prototype.belongsToUser = function() {
   return false;
 }
 
+Task.prototype.deleteButton = function() {
+  return `<button class="mini ui delete red icon button" data-id="${this.id}"><i class="remove icon"></i></button>`
+}
+
+Task.prototype.formatButtons = function() {
+  return `<div class="floating">${this.deleteButton()}</div>`
+}
+
 Task.prototype.formatName = function() {
     return `<div class="caps small-header"><b>${this.name}</b>${this.getUsers()}</div>`;
 }
@@ -64,7 +71,7 @@ Task.prototype.formatNotes = function() {
 }
 
 Task.prototype.formatHTML = function() {
-    return `<div class="item"><br><div class="content">${this.formatName()}${this.formatNotes()}</div><br></div>`;
+    return `<div class="item"><br><div class="content">${this.formatButtons()}${this.formatName()}${this.formatNotes()}</div><br></div>`;
 }
 
 let submitTaskForm = function() {

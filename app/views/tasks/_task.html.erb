@@ -29,11 +29,11 @@
       <% end %>
 
       <!-- delete button -->
-      <%= form_tag team_task_path(@team, task), method: "delete", class: "ui inline form" do %>
-        <%= button_tag "Delete", class: "mini ui red icon button", id: "delete_#{task.id}" do %>
+      <%#= form_tag team_task_path(@team, task), method: "delete", class: "ui inline form" do %>
+        <%= button_tag "Delete", class: "mini ui delete red icon button", 'data-id': task.id do -%>
             <i class="remove icon"></i>
         <% end %>
-      <% end %>
+      <%# end %>
       <br>
     </div>
 
