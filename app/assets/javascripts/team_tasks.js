@@ -98,8 +98,22 @@ Task.prototype.formatNotes = function() {
     return `<span class="blue-text">${this.notes}</span>`;
 }
 
+Task.prototype.formatCommentsList = function() {
+  var html = "<ul>";
+  $(this.comments).each(function(index, comment) {
+    html += formatComment(comment.content);
+  });
+  html += "</ul>";
+  return html;
+}
+
 Task.prototype.formatHTML = function() {
-    return `<div class="item" id="task${this.id}"><br><div class="content">${this.formatButtons()}${this.formatName()}${this.formatNotes()}</div><br></div>`;
+    return `<div class="item" id="task${this.id}"><br><div class="content">${this.formatButtons()}${this.formatName()}${this.formatNotes()}${this.formatCommentsList()}</div><br></div>`;
+}
+
+
+let formatComment = function(content) {
+  return `<li>${content}</li>`;
 }
 
 let submitTaskForm = function() {
