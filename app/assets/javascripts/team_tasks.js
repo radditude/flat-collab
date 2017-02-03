@@ -116,7 +116,7 @@ let incompleteTasksButton = function() {
 let allTasksButton = function() {
     $("#allTasks").click(function(e) {
         e.preventDefault();
-        $.get(`/teams/${currentTeam}/tasks`, function(data) {
+        $.get(`/teams/${currentTeam}/tasks/load`, function(data) {
             $("#tasksGoHere").empty();
             $(data.tasks).each(function(index, task) {
                 var thisTask = new Task(task);
