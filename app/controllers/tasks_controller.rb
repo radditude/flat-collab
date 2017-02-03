@@ -57,7 +57,7 @@ class TasksController < ApplicationController
 
   def claim
     current_task.assign_user(current_user)
-    redirect_to team_tasks_path(current_team)
+    # redirect_to team_tasks_path(current_team)
   end
 
   def complete

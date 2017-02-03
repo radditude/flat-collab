@@ -13,6 +13,7 @@ let loadTeamTasks = function(teamId) {
 
 let attachTeamTasksListeners = function() {
     deleteTaskButtons();
+    claimTaskButtons();
     submitTaskForm();
     myTasksButton();
     incompleteTasksButton();
@@ -163,4 +164,17 @@ let deleteTaskButtons = function() {
       $(`#task${id}`).hide(500);
     });
   });
+}
+
+let claimTaskButtons = function() {
+  $("#tasksGoHere").on("click", ".claim", function() {
+    var id = $(this).data("id");
+    var url = `/teams/${currentTeam}/tasks/${id}/claim`;
+    $.ajax({
+      url: url,
+      method: "PATCH"
+    }).done(function() {
+      $(`#task${id} button.claim`).replaceWith(`<button class="mini ui complete blue button" data-id="${id}">Mark Complete</button>`);
+    });
+  })
 }
