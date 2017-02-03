@@ -129,7 +129,7 @@ let loadCommentForm = function(id) {
   html += `<input type='hidden' name='authenticity_token' value='${authenticity_token}'>`;
   html += "<div class='field'>"
   html += `<input type="text" name="comment[content]"></div>`;
-  html += `<button type="submit" class="mini ui blue button commentButton" data-id="${id}">Add Comment</button>`;
+  html += `<button type="submit" class="mini ui button commentButton" data-id="${id}">Add Comment</button>`;
   html += "</form>";
   return html;
 }
