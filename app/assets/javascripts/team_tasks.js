@@ -23,8 +23,8 @@ let loadTaskList = function(url) {
   $.get(url + "/load", function(response) {
     $(response.tasks).each(function(index, task) {
         var thisTask = new Task(task);
+        console.log(thisTask.belongsToUser());
         var html = thisTask.formatHTML();
-        // debugger;
         $("#tasksGoHere").prepend(html);
     });
   });
@@ -43,6 +43,16 @@ Task.prototype.getUsers = function() {
     } else {
         return "";
     }
+}
+
+Task.prototype.belongsToUser = function() {
+  var l = this.users.length;
+  for (var i = 0; i < l; i++) {
+    if (this.users[i].id === currentUser.id) {
+      return true;
+    }
+  }
+  return false;
 }
 
 Task.prototype.formatName = function() {
