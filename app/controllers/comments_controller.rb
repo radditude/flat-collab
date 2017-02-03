@@ -2,14 +2,13 @@ class CommentsController < ApplicationController
   def create
 
     @task = Task.find(params[:task_id])
-    @task.comments.create(comment_params)
-
-    redirect_to team_tasks_path(@task.team)
+    @comment = @task.comments.create(comment_params)
+    render json: @comment
   end
 
   private
 
   def comment_params
-    params.permit(:content)
+    params.require(:comment).permit(:content)
   end
 end

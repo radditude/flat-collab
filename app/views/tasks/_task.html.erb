@@ -58,9 +58,9 @@
       </ul>
     <% end %>
 
-    <%= form_tag team_task_comments_path(@team, task), method: "post", class: "ui inline form" do %>
+    <%= form_tag team_task_comments_path(@team, task), class: "ui inline form" do %>
       <%= text_field_tag :content %>
-      <%= submit_tag %>
+      <%= button_tag "Add Comment" %>
     <% end %>
     <div class="small italic">Updated <%= show_updated_at(task) %></div>
   </div>

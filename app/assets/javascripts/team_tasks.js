@@ -1,6 +1,7 @@
 /* global $ */
 
 var currentTeam;
+var commentForm;
 
 let loadTeamTasks = function(teamId) {
   var url = `/teams/${teamId}/tasks`
@@ -15,6 +16,7 @@ let attachTeamTasksListeners = function() {
     deleteTaskButtons();
     claimTaskButtons();
     completeTaskButtons();
+    submitCommentForm();
     submitTaskForm();
     myTasksButton();
     incompleteTasksButton();
@@ -100,20 +102,36 @@ Task.prototype.formatNotes = function() {
 
 Task.prototype.formatCommentsList = function() {
   var html = "<ul>";
+  var id = this.id;
   $(this.comments).each(function(index, comment) {
     html += formatComment(comment.content);
   });
   html += "</ul>";
+  html += loadCommentForm(id);
   return html;
 }
 
 Task.prototype.formatHTML = function() {
-    return `<div class="item" id="task${this.id}"><br><div class="content">${this.formatButtons()}${this.formatName()}${this.formatNotes()}${this.formatCommentsList()}</div><br></div>`;
+  var html = '<div class="ui divider"></div>';
+  html += `<div class="item" id="task${this.id}"><br><div class="content">`;
+  html += `${this.formatButtons()}${this.formatName()}${this.formatNotes()}${this.formatCommentsList()}`;
+  html += `</div><br></div>`;
+  return html;
 }
-
 
 let formatComment = function(content) {
   return `<li>${content}</li>`;
+}
+
+let loadCommentForm = function(id) {
+  var authenticity_token = $('meta[name=csrf-token]').attr('content');
+  var html = `<form class='ui inline comment form' id="task${id}-comment-form">`;
+  html += `<input type='hidden' name='authenticity_token' value='${authenticity_token}'>`;
+  html += "<div class='field'>"
+  html += `<input type="text" name="comment[content]"></div>`;
+  html += `<button type="submit" class="mini ui blue button commentButton" data-id="${id}">Add Comment</button>`;
+  html += "</form>";
+  return html;
 }
 
 let submitTaskForm = function() {
@@ -125,6 +143,20 @@ let submitTaskForm = function() {
       var thisTask = new Task(data.task);
       $("#tasksGoHere").prepend(thisTask.formatHTML());
       $("form#newTaskForm")[0].reset();
+    });
+  });
+}
+
+let submitCommentForm = function() {
+  $("#tasksGoHere").on("click", ".commentButton", function(e) {
+    e.preventDefault();
+    var id = $(this).data("id");
+    var values = $(`#task${id}-comment-form`).serialize();
+    var postRequest = $.post(`/teams/${currentTeam}/tasks/${id}/comments`, values);
+    postRequest.done(function(data) {
+      var html = formatComment(data.comment.content);
+      $(`#task${id} ul`).append(html);
+      $(`#task${id}-comment-form`)[0].reset();
     });
   });
 }
