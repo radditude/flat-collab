@@ -14,6 +14,7 @@ let loadTeamTasks = function(teamId) {
 let attachTeamTasksListeners = function() {
     deleteTaskButtons();
     claimTaskButtons();
+    completeTaskButtons();
     submitTaskForm();
     myTasksButton();
     incompleteTasksButton();
@@ -175,6 +176,19 @@ let claimTaskButtons = function() {
       method: "PATCH"
     }).done(function() {
       $(`#task${id} button.claim`).replaceWith(`<button class="mini ui complete blue button" data-id="${id}">Mark Complete</button>`);
+    });
+  })
+}
+
+let completeTaskButtons = function() {
+  $("#tasksGoHere").on("click", ".complete", function() {
+    var id = $(this).data("id");
+    var url = `/teams/${currentTeam}/tasks/${id}/complete`;
+    $.ajax({
+      url: url,
+      method: "PATCH"
+    }).done(function() {
+      $(`#task${id} button.complete`).replaceWith(`<button class="mini ui completed green button" data-id="${id}">Completed!</button>`);
     });
   })
 }
