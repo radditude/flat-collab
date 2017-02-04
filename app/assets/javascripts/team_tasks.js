@@ -15,7 +15,7 @@ let loadTeamTasks = function(teamId) {
 let loadEditTask = function(taskId) {
   var url = `/teams/${currentTeam}/tasks/${taskId}/edit`;
   $("#text-container").load(url + " #loadingTheForm", function() {
-
+    console.log("yay");
   })
 }
 
@@ -93,7 +93,7 @@ Task.prototype.claimButton = function() {
 }
 
 Task.prototype.editButton = function() {
-  return `<button class="mini ui edit white icon button" data-id="${this.id}"><i class="edit icon"></i></button>`;
+  return `<button class="mini ui editTask white icon button" data-id="${this.id}"><i class="edit icon"></i></button>`;
 }
 
 Task.prototype.deleteButton = function() {
@@ -252,8 +252,9 @@ let completeTaskButtons = function() {
 }
 
 let editTaskButtons = function() {
-  $("#tasksGoHere").on("click", ".edit", function() {
+  $("#tasksGoHere").on("click", ".editTask", function() {
     var id = $(this).data("id");
+    debugger;
     loadEditTask(id);
   })
 }
