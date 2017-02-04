@@ -4,7 +4,7 @@ var currentTeam;
 var commentForm;
 
 let loadTeamTasks = function(teamId) {
-  var url = `/teams/${teamId}/tasks`
+  var url = `/teams/${teamId}/tasks`;
   $("#text-container").load(url + " #htmlGoesHere", function() {
       currentTeam = teamId;
       loadTaskList(url);
@@ -12,8 +12,16 @@ let loadTeamTasks = function(teamId) {
   });
 }
 
+let loadEditTask = function(taskId) {
+  var url = `/teams/${currentTeam}/tasks/${taskId}/edit`;
+  $("#text-container").load(url + " #loadingTheForm", function() {
+
+  })
+}
+
 let attachTeamTasksListeners = function() {
     deleteTaskButtons();
+    editTaskButtons();
     claimTaskButtons();
     completeTaskButtons();
     submitCommentForm();
@@ -84,12 +92,16 @@ Task.prototype.claimButton = function() {
   return `<button class="mini ui claim yellow button" data-id="${this.id}">Claim Task</button>`;
 }
 
+Task.prototype.editButton = function() {
+  return `<button class="mini ui edit white icon button" data-id="${this.id}"><i class="edit icon"></i></button>`;
+}
+
 Task.prototype.deleteButton = function() {
   return `<button class="mini ui delete red icon button" data-id="${this.id}"><i class="remove icon"></i></button>`;
 }
 
 Task.prototype.formatButtons = function() {
-  return `<div class="floating">${this.chooseButtonType()}${this.deleteButton()}</div>`;
+  return `<div class="floating">${this.chooseButtonType()}${this.editButton()}${this.deleteButton()}</div>`;
 }
 
 Task.prototype.formatName = function() {
@@ -236,5 +248,12 @@ let completeTaskButtons = function() {
     }).done(function() {
       $(`#task${id} button.complete`).replaceWith(`<button class="mini ui completed green button" data-id="${id}">Completed!</button>`);
     });
+  })
+}
+
+let editTaskButtons = function() {
+  $("#tasksGoHere").on("click", ".edit", function() {
+    var id = $(this).data("id");
+    loadEditTask(id);
   })
 }
