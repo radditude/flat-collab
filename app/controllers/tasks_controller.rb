@@ -71,11 +71,12 @@ class TasksController < ApplicationController
   end
 
   def update
-    if current_task.update(task_params)
-      redirect_to team_tasks_path(current_team)
-    else
-      render 'edit'
-    end
+    current_task.update(task_params)
+    # if current_task.update(task_params)
+    #   redirect_to team_tasks_path(current_team)
+    # else
+    #   render 'edit'
+    # end
   end
 
   def destroy

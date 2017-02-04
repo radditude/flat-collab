@@ -1,6 +1,7 @@
 /* global $ */
 
 var currentTeam;
+var currentTask;
 var commentForm;
 
 let loadTeamTasks = function(teamId) {
@@ -14,8 +15,9 @@ let loadTeamTasks = function(teamId) {
 
 let loadEditTask = function(taskId) {
   var url = `/teams/${currentTeam}/tasks/${taskId}/edit`;
-  $("#text-container").load(url + " #loadingTheForm", function() {
-    console.log("yay");
+  $("#text-container").load(url + " #htmlGoesHere", function() {
+    currentTask = taskId;
+    attachEditTaskListener();
   })
 }
 
@@ -29,6 +31,20 @@ let attachTeamTasksListeners = function() {
     myTasksButton();
     incompleteTasksButton();
     allTasksButton();
+}
+
+let attachEditTaskListener = function() {
+  $("form").on("submit", function(e) {
+    e.preventDefault();
+    var values = $("form").serialize();
+    $.ajax({
+      url: `/teams/${currentTeam}/tasks/${currentTask}`,
+      method: "PATCH",
+      data: values
+    }).done(function() {
+      loadTeamTasks(currentTeam);
+    });
+  })
 }
 
 let loadTaskList = function(url) {
@@ -254,7 +270,6 @@ let completeTaskButtons = function() {
 let editTaskButtons = function() {
   $("#tasksGoHere").on("click", ".editTask", function() {
     var id = $(this).data("id");
-    debugger;
     loadEditTask(id);
   })
 }
