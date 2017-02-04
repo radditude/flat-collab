@@ -101,12 +101,12 @@ Task.prototype.formatNotes = function() {
 }
 
 Task.prototype.formatCommentsList = function() {
-  var html = "<ul>";
+  var html = "<div class='ui bulleted list'>";
   var id = this.id;
   $(this.comments).each(function(index, comment) {
     html += formatComment(comment.content);
   });
-  html += "</ul>";
+  html += "</div>";
   html += loadCommentForm(id);
   return html;
 }
@@ -120,7 +120,7 @@ Task.prototype.formatHTML = function() {
 }
 
 let formatComment = function(content) {
-  return `<li>${content}</li>`;
+  return `<div class="item">${content}</div>`;
 }
 
 let loadCommentForm = function(id) {
@@ -155,7 +155,7 @@ let submitCommentForm = function() {
     var postRequest = $.post(`/teams/${currentTeam}/tasks/${id}/comments`, values);
     postRequest.done(function(data) {
       var html = formatComment(data.comment.content);
-      $(`#task${id} ul`).append(html);
+      $(`#task${id} .ui.bulleted.list`).append(html);
       $(`#task${id}-comment-form`)[0].reset();
     });
   });
