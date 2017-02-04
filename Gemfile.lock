@@ -81,6 +81,7 @@ GEM
       responders
       warden (~> 1.2.3)
     diff-lcs (1.2.5)
+    dotenv (2.2.0)
     erubis (2.7.0)
     execjs (2.7.0)
     factory_girl (4.7.0)
@@ -243,6 +244,7 @@ DEPENDENCIES
   capybara
   coffee-rails (~> 4.2)
   devise
+  dotenv
   factory_girl_rails (~> 4.0)
   jbuilder (~> 2.5)
   jquery-rails
