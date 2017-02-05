@@ -14,6 +14,5 @@
 //= require jquery_ujs
 //= require semantic-ui
 //= require index
-//= require team_tasks
 import {map} from 'lodash';
 console.log(map([1, 2, 3], (n) => n * 3));
