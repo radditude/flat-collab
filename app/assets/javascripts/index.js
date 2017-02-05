@@ -96,7 +96,7 @@ let joinButton = function() {
     var postRequest = $.post(url);
     postRequest.done(function(data) {
       var id = data.team.id;
-      loadTeamTasks(team);
+      loadTeamTasks(id);
     })
   })
 }
