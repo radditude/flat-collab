@@ -256,7 +256,7 @@ Task.prototype.formatButtons = function() {
 }
 
 Task.prototype.formatName = function() {
-    return `<div class="caps small-header"><b>${this.name}</b>${this.getUsers()}</div>`;
+    return `<div class="caps small-header"><b>${this.name}</b><span id="userNames">${this.getUsers()}</span></div>`;
 }
 
 Task.prototype.formatNotes = function() {
@@ -383,7 +383,9 @@ let claimTaskButtons = function() {
     $.ajax({
       url: url,
       method: "PATCH"
-    }).done(function() {
+    }).done(function(response) {
+      debugger;
+      console.log(response);
       $(`#task${id} button.claim`).replaceWith(`<button class="mini ui complete blue button" data-id="${id}">Mark Complete</button>`);
     });
   })

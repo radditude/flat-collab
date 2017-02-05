@@ -56,13 +56,13 @@ class TasksController < ApplicationController
   end
 
   def claim
-    current_task.assign_user(current_user)
-    # redirect_to team_tasks_path(current_team)
+    @task = current_task
+    @task.assign_user(current_user)
+    render json: @task
   end
 
   def complete
     current_task.complete_task
-    # redirect_to team_tasks_path(current_team)
   end
 
   def edit
