@@ -14,5 +14,5 @@
 //= require jquery_ujs
 //= require semantic-ui
 //= require index
-import {map} from 'lodash';
-console.log(map([1, 2, 3], (n) => n * 3));
+// import {map} from 'lodash';
+// console.log(map([1, 2, 3], (n) => n * 3));
