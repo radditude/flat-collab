@@ -17,9 +17,10 @@ gem 'coffee-rails', '~> 4.2'
 # gem 'therubyracer', platforms: :ruby
 gem 'active_model_serializers'
 gem 'dotenv'
-gem 'sprockets', '4.0.0.beta2'
-gem 'babel-transpiler'
-gem 'sprockets-commoner'
+gem 'sprockets', '3.7.1'
+# gem 'sprockets', '4.0.0.beta2'
+# gem 'babel-transpiler'
+# gem 'sprockets-commoner'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'

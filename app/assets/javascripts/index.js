@@ -384,9 +384,9 @@ let claimTaskButtons = function() {
       url: url,
       method: "PATCH"
     }).done(function(response) {
-      debugger;
-      console.log(response);
-      $(`#task${id} button.claim`).replaceWith(`<button class="mini ui complete blue button" data-id="${id}">Mark Complete</button>`);
+      var theTask = new Task(response.task);
+      $(`#task${id} button.claim`).replaceWith(theTask.claimButton());
+      $(`#task${id} #userNames`).html(theTask.getUsers());
     });
   })
 }
