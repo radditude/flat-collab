@@ -10,6 +10,8 @@ var currentTeam;
 var currentTask;
 var commentForm;
 
+// code for home page/pair request page
+
 // ES6 syntax
 class PairRequest {
   constructor(data) {
@@ -137,6 +139,7 @@ let attachListeners = function() {
   teamMenuItems();
 }
 
+// begin team_tasks view code
 
 
 let loadTeamTasks = function(teamId) {
@@ -192,6 +195,7 @@ let loadTaskList = function(url) {
   });
 }
 
+// begin Task model object
 // written (almost) without using ES6 class syntax
 // (more or less just to prove it works)
 function Task(data) {
@@ -256,7 +260,7 @@ Task.prototype.formatButtons = function() {
 }
 
 Task.prototype.formatName = function() {
-    return `<div class="caps small-header"><b>${this.name}</b><span id="userNames">${this.getUsers()}</span></div>`;
+    return `<div class="caps small-header"><b><a class="blue-text showTask" href="#" data-id="${this.id}">${this.name}</a></b><span id="userNames">${this.getUsers()}</span></div>`;
 }
 
 Task.prototype.formatNotes = function() {
@@ -281,6 +285,8 @@ Task.prototype.formatHTML = function() {
   html += `</div><br></div>`;
   return html;
 }
+
+// end Task object methods
 
 let formatComment = function(content) {
   return `<div class="item">${content}</div>`;
@@ -385,7 +391,7 @@ let claimTaskButtons = function() {
       method: "PATCH"
     }).done(function(response) {
       var theTask = new Task(response.task);
-      $(`#task${id} button.claim`).replaceWith(theTask.claimButton());
+      $(`#task${id} button.claim`).replaceWith(theTask.completeButton());
       $(`#task${id} #userNames`).html(theTask.getUsers());
     });
   })
@@ -406,6 +412,13 @@ let completeTaskButtons = function() {
 
 let editTaskButtons = function() {
   $("#tasksGoHere").on("click", ".editTask", function() {
+    var id = $(this).data("id");
+    loadEditTask(id);
+  })
+}
+
+let showTaskLinks = function() {
+  $("#tasksGoHere").on("click", ".showTask", function() {
     var id = $(this).data("id");
     loadEditTask(id);
   })
