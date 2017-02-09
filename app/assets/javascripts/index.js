@@ -18,19 +18,19 @@ class PairRequest {
     Object.assign(this, data);
   }
 
-  postedAt() {
-    var date = new Date(this.updated_at);
-    var day = date.getDate();
-    var month = date.getMonth();
-    return `<p class="small italic">Posted ${month + 1}/${day}</p>`;
-  }
-
-  formatTitle() {
-    return `<div class="header">${this.user.name} is looking for a parter for ${this.project}</div><br>`;
+  formatHTML() {
+    var html = `<div class="item" id="pr-${this.id}"><br>`;
+    html += `<div class="content">${this.formatTitle()} ${this.formatInfo()} ${this.postedAt()} ${this.loadButton()}</div>`;
+    html += `<br></div>`;
+    return html;
   }
 
   formatInfo() {
     return `${this.info}`;
+  }
+
+  formatTitle() {
+    return `<div class="header">${this.user.name} is looking for a parter for ${this.project}</div><br>`;
   }
 
   loadButton() {
@@ -42,8 +42,11 @@ class PairRequest {
     }
   }
 
-  formatHTML() {
-    return `<div class="item" id="pr-${this.id}"><br><div class="content">${this.formatTitle()} ${this.formatInfo()} ${this.postedAt()} ${this.loadButton()}</div><br></div>`;
+  postedAt() {
+    var date = new Date(this.updated_at);
+    var day = date.getDate();
+    var month = date.getMonth();
+    return `<p class="small italic">Posted ${month + 1}/${day}</p>`;
   }
 }
 

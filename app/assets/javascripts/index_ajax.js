@@ -1,5 +1,3 @@
-// ajax calls
-
 let loadPairRequests = function() {
   $.get("/pair_requests", function(data) {
     var posts = data.pair_requests;
@@ -22,13 +20,13 @@ let loadTeamsMenu = function() {
   })
 }
 
-let postPRForm = function(values) {
-  var postRequest = $.post("/pair_requests", values);
-
-  postRequest.done(function(data) {
-    var thisPost = new PairRequest(data.pair_request);
-    $("#pairRequests").prepend(thisPost.formatHTML());
-  });
+let patchInactiveButton = function(url, id) {
+  $.ajax({
+    url: url,
+    method: "PATCH"
+  }).done(function() {
+    $(`#pr-${id}`).hide(500);
+  })
 }
 
 let postJoinButton = function(url) {
@@ -40,11 +38,11 @@ let postJoinButton = function(url) {
   })
 }
 
-let patchInactiveButton = function(url, id) {
-  $.ajax({
-    url: url,
-    method: "PATCH"
-  }).done(function() {
-    $(`#pr-${id}`).hide(500);
-  })
+let postPRForm = function(values) {
+  var postRequest = $.post("/pair_requests", values);
+
+  postRequest.done(function(data) {
+    var thisPost = new PairRequest(data.pair_request);
+    $("#pairRequests").prepend(thisPost.formatHTML());
+  });
 }
