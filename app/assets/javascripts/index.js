@@ -4,6 +4,14 @@ $(document).ready(function() {
   attachListeners();
 })
 
+let attachListeners = function() {
+  submitPRForm();
+  joinButton();
+  markInactiveButton();
+  dropdownMenu();
+  teamMenuItems();
+}
+
 // PairRequest object defined using ES6 class syntax
 class PairRequest {
   constructor(data) {

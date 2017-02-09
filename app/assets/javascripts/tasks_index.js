@@ -2,108 +2,36 @@ var currentTeam;
 var currentTask;
 var commentForm;
 
-let attachListeners = function() {
-  submitPRForm();
-  joinButton();
-  markInactiveButton();
-  dropdownMenu();
-  teamMenuItems();
-}
-
-// begin team_tasks view code
-
-
-let loadTeamTasks = function(teamId) {
-  var url = `/teams/${teamId}/tasks`;
-  $("#text-container").load(url + " #htmlGoesHere", function() {
-      currentTeam = teamId;
-      loadTaskList(url);
-      attachTeamTasksListeners();
-  });
-}
-
-let loadEditTask = function(taskId) {
-  var url = `/teams/${currentTeam}/tasks/${taskId}/edit`;
-  $("#text-container").load(url + " #htmlGoesHere", function() {
-    currentTask = taskId;
-    attachEditTaskListener();
-  })
-}
-
-let loadShowTask = function(taskId) {
-  var url = `/teams/${currentTeam}/tasks/${taskId}`;
-  $.get(url, function(data) {
-    currentTask = taskId;
-    var thisTask = new Task(data.task);
-    var html = thisTask.formatHTML('show');
-    $("#tasksGoHere").html(html);
-    $("#menu").hide();
-    $("#newTaskFormContainer").hide();
-    $("#leave-team").hide();
-    attachBackLinkListener();
-  })
-}
-
 let attachTeamTasksListeners = function() {
-    showTaskLinks();
-    deleteTaskButtons();
-    editTaskButtons();
-    claimTaskButtons();
-    completeTaskButtons();
-    submitCommentForm();
-    submitTaskForm();
-    myTasksButton();
-    incompleteTasksButton();
-    allTasksButton();
+  // this gets called as part of the loadTeamTasks() function
+  showTaskLinks();
+  deleteTaskButtons();
+  editTaskButtons();
+  claimTaskButtons();
+  completeTaskButtons();
+  submitCommentForm();
+  submitTaskForm();
+  myTasksButton();
+  incompleteTasksButton();
+  allTasksButton();
 }
 
-let attachEditTaskListener = function() {
-  $("form").on("submit", function(e) {
-    e.preventDefault();
-    var values = $("form").serialize();
-    $.ajax({
-      url: `/teams/${currentTeam}/tasks/${currentTask}`,
-      method: "PATCH",
-      data: values
-    }).done(function() {
-      loadTeamTasks(currentTeam);
-    });
-  })
-}
-
-let attachBackLinkListener = function() {
-  $("#backToTasksIndex").on("click", function(e) {
-    e.preventDefault();
-    loadTeamTasks(currentTeam);
-  });
-}
-
-let loadTaskList = function(url) {
-  $.get(url + "/load", function(response) {
-    $(response.tasks).each(function(index, task) {
-        var thisTask = new Task(task);
-        var html = thisTask.formatHTML();
-        $("#tasksGoHere").prepend(html);
-    });
-  });
-}
-
-// begin Task model object
+// begin Task model object + methods
 // written (almost) without using ES6 class syntax
 // (more or less just to prove it works)
 function Task(data) {
-    // yeah, I know, this is ES6 syntax
-    Object.assign(this, data);
+  // yeah, I know, this is ES6 syntax. I said almost!
+  Object.assign(this, data);
 }
 
 Task.prototype.getUsers = function() {
-    if (this.users.length === 2) {
-        return ` &mdash; ${this.users[0].name} & ${this.users[1].name}`;
-    } else if (this.users.length === 1) {
-        return ` &mdash; ${this.users[0].name}`;
-    } else {
-        return "";
-    }
+  if (this.users.length === 2) {
+      return ` &mdash; ${this.users[0].name} & ${this.users[1].name}`;
+  } else if (this.users.length === 1) {
+      return ` &mdash; ${this.users[0].name}`;
+  } else {
+      return "";
+  }
 }
 
 Task.prototype.belongsToUser = function() {
@@ -153,11 +81,14 @@ Task.prototype.formatButtons = function() {
 }
 
 Task.prototype.formatName = function() {
-    return `<div class="caps small-header"><b><a class="blue-text showTask" href="#" data-id="${this.id}">${this.name}</a></b><span id="userNames">${this.getUsers()}</span></div>`;
+  var html = `<div class="caps small-header">`;
+  html += `<b><a class="blue-text showTask" href="#" data-id="${this.id}">${this.name}</a></b>`;
+  html += `<span id="userNames">${this.getUsers()}</span></div>`;
+  return html;
 }
 
 Task.prototype.formatNotes = function() {
-    return `<span class="blue-text">${this.notes}</span>`;
+  return `<span class="blue-text">${this.notes}</span>`;
 }
 
 Task.prototype.formatBackLink = function() {
@@ -209,125 +140,4 @@ let loadCommentForm = function(id) {
   html += `<button type="submit" class="mini ui button commentButton" data-id="${id}">Add Comment</button>`;
   html += "</form>";
   return html;
-}
-
-let submitTaskForm = function() {
-  $("#submitTaskForm").click(function(e) {
-    e.preventDefault();
-    var values = $("form#newTaskForm").serialize();
-    var postRequest = $.post(`/teams/${currentTeam}/tasks`, values);
-    postRequest.done(function(data) {
-      var thisTask = new Task(data.task);
-      $("#tasksGoHere").prepend(thisTask.formatHTML());
-      $("form#newTaskForm")[0].reset();
-    });
-  });
-}
-
-let submitCommentForm = function() {
-  $("#tasksGoHere").on("click", ".commentButton", function(e) {
-    e.preventDefault();
-    var id = $(this).data("id");
-    var values = $(`#task${id}-comment-form`).serialize();
-    var postRequest = $.post(`/teams/${currentTeam}/tasks/${id}/comments`, values);
-    postRequest.done(function(data) {
-      var html = formatComment(data.comment.content);
-      $(`#task${id} .ui.bulleted.list`).append(html);
-      $(`#task${id}-comment-form`)[0].reset();
-    });
-  });
-}
-
-let myTasksButton = function() {
-    $("#myTasks").click(function(e) {
-        e.preventDefault();
-        $.get(`/teams/${currentTeam}/tasks/user_tasks`, function(data) {
-            $("#tasksGoHere").empty();
-            $(data.tasks).each(function(index, task) {
-                var thisTask = new Task(task);
-                $("#tasksGoHere").prepend(thisTask.formatHTML());
-            })
-        })
-    })
-}
-
-let incompleteTasksButton = function() {
-    $("#incompleteTasks").click(function(e) {
-        e.preventDefault();
-        $.get(`/teams/${currentTeam}/tasks/incomplete`, function(data) {
-            $("#tasksGoHere").empty();
-            $(data.tasks).each(function(index, task) {
-                var thisTask = new Task(task);
-                $("#tasksGoHere").prepend(thisTask.formatHTML());
-            })
-        })
-    })
-}
-
-let allTasksButton = function() {
-    $("#allTasks").click(function(e) {
-        e.preventDefault();
-        $.get(`/teams/${currentTeam}/tasks/load`, function(data) {
-            $("#tasksGoHere").empty();
-            $(data.tasks).each(function(index, task) {
-                var thisTask = new Task(task);
-                $("#tasksGoHere").prepend(thisTask.formatHTML());
-            })
-        })
-    })
-}
-
-let deleteTaskButtons = function() {
-  $("#tasksGoHere").on("click", ".delete", function() {
-    var id = $(this).data("id");
-    var url = `/teams/${currentTeam}/tasks/${id}`;
-    $.ajax({
-      url: url,
-      method: "DELETE"
-    }).done(function() {
-      $(`#task${id}`).hide(500);
-    });
-  });
-}
-
-let claimTaskButtons = function() {
-  $("#tasksGoHere").on("click", ".claim", function() {
-    var id = $(this).data("id");
-    var url = `/teams/${currentTeam}/tasks/${id}/claim`;
-    $.ajax({
-      url: url,
-      method: "PATCH"
-    }).done(function(response) {
-      var theTask = new Task(response.task);
-      $(`#task${id} button.claim`).replaceWith(theTask.completeButton());
-      $(`#task${id} #userNames`).html(theTask.getUsers());
-    });
-  })
-}
-
-let completeTaskButtons = function() {
-  $("#tasksGoHere").on("click", ".complete", function() {
-    var id = $(this).data("id");
-    var url = `/teams/${currentTeam}/tasks/${id}/complete`;
-    $.ajax({
-      url: url,
-      method: "PATCH"
-    }).done(function() {
-      $(`#task${id} button.complete`).replaceWith(`<button class="mini ui completed green button" data-id="${id}">Completed!</button>`);
-    });
-  })
-}
-
-let editTaskButtons = function() {
-  $("#tasksGoHere").on("click", ".editTask", function() {
-    var id = $(this).data("id");
-    loadEditTask(id);
-  })
-}
-
-let showTaskLinks = function() {
-  $("#tasksGoHere").on("click", ".showTask", function() {
-    var id = $(this).data("id");
-    loadShowTask(id);
-  })
 }
