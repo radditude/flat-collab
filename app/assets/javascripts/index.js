@@ -159,7 +159,22 @@ let loadEditTask = function(taskId) {
   })
 }
 
+let loadShowTask = function(taskId) {
+  var url = `/teams/${currentTeam}/tasks/${taskId}`;
+  $.get(url, function(data) {
+    currentTask = taskId;
+    var thisTask = new Task(data.task);
+    var html = thisTask.formatHTML('show');
+    $("#tasksGoHere").html(html);
+    $("#menu").hide();
+    $("#newTaskFormContainer").hide();
+    $("#leave-team").hide();
+    attachBackLinkListener();
+  })
+}
+
 let attachTeamTasksListeners = function() {
+    showTaskLinks();
     deleteTaskButtons();
     editTaskButtons();
     claimTaskButtons();
@@ -183,6 +198,13 @@ let attachEditTaskListener = function() {
       loadTeamTasks(currentTeam);
     });
   })
+}
+
+let attachBackLinkListener = function() {
+  $("#backToTasksIndex").on("click", function(e) {
+    e.preventDefault();
+    loadTeamTasks(currentTeam);
+  });
 }
 
 let loadTaskList = function(url) {
@@ -267,6 +289,10 @@ Task.prototype.formatNotes = function() {
     return `<span class="blue-text">${this.notes}</span>`;
 }
 
+Task.prototype.formatBackLink = function() {
+  return `<a id="backToTasksIndex" class="blue-text" href="#"><< Back to list</a>`;
+}
+
 Task.prototype.formatCommentsList = function() {
   var html = "<div class='ui bulleted list'>";
   var id = this.id;
@@ -278,12 +304,23 @@ Task.prototype.formatCommentsList = function() {
   return html;
 }
 
-Task.prototype.formatHTML = function() {
-  var html = '<div class="ui divider"></div>';
-  html += `<div class="item" id="task${this.id}"><br><div class="content">`;
-  html += `${this.formatButtons()}${this.formatName()}${this.formatNotes()}${this.formatCommentsList()}`;
-  html += `</div><br></div>`;
-  return html;
+Task.prototype.formatHTML = function(type) {
+  if (type === 'show') {
+    var html = `${this.formatBackLink()}`
+    html += '<div class="ui divider"></div>';
+    html += `<div class="item" id="task${this.id}"><br><div class="content">`;
+    html += `<h2>${this.formatName()}</h2>`
+    html += `${this.formatButtons()}${this.formatNotes()}${this.formatCommentsList()}`;
+    html += `</div><br></div>`;
+    return html;
+  } else {
+    var html = '<div class="ui divider"></div>';
+    html += `<div class="item" id="task${this.id}"><br><div class="content">`;
+    html += `${this.formatButtons()}${this.formatName()}${this.formatNotes()}${this.formatCommentsList()}`;
+    html += `</div><br></div>`;
+    return html;
+  }
+
 }
 
 // end Task object methods
@@ -420,6 +457,6 @@ let editTaskButtons = function() {
 let showTaskLinks = function() {
   $("#tasksGoHere").on("click", ".showTask", function() {
     var id = $(this).data("id");
-    loadEditTask(id);
+    loadShowTask(id);
   })
 }
