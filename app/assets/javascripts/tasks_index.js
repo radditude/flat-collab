@@ -1,6 +1,5 @@
-var currentTeam;
-var currentTask;
-var commentForm;
+var currentTeam; // set during loadTeamTasks
+var currentTask; // set during loadEditTask and loadShowTask
 
 let attachTeamTasksListeners = function() {
   // this gets called as part of the loadTeamTasks() function
@@ -22,16 +21,6 @@ let attachTeamTasksListeners = function() {
 function Task(data) {
   // yeah, I know, this is ES6 syntax. I said almost!
   Object.assign(this, data);
-}
-
-Task.prototype.getUsers = function() {
-  if (this.users.length === 2) {
-      return ` &mdash; ${this.users[0].name} & ${this.users[1].name}`;
-  } else if (this.users.length === 1) {
-      return ` &mdash; ${this.users[0].name}`;
-  } else {
-      return "";
-  }
 }
 
 Task.prototype.belongsToUser = function() {
@@ -56,6 +45,10 @@ Task.prototype.chooseButtonType = function() {
   }
 }
 
+Task.prototype.claimButton = function() {
+  return `<button class="mini ui claim yellow button" data-id="${this.id}">Claim Task</button>`;
+}
+
 Task.prototype.completeButton = function() {
   return `<button class="mini ui complete blue button" data-id="${this.id}">Mark Complete</button>`;
 }
@@ -64,35 +57,20 @@ Task.prototype.completedTask = function() {
   return `<button class="mini ui completed green button" data-id="${this.id}">Completed!</button>`;
 }
 
-Task.prototype.claimButton = function() {
-  return `<button class="mini ui claim yellow button" data-id="${this.id}">Claim Task</button>`;
+Task.prototype.deleteButton = function() {
+  return `<button class="mini ui delete red icon button" data-id="${this.id}"><i class="remove icon"></i></button>`;
 }
 
 Task.prototype.editButton = function() {
   return `<button class="mini ui editTask white icon button" data-id="${this.id}"><i class="edit icon"></i></button>`;
 }
 
-Task.prototype.deleteButton = function() {
-  return `<button class="mini ui delete red icon button" data-id="${this.id}"><i class="remove icon"></i></button>`;
+Task.prototype.formatBackLink = function() {
+  return `<a id="backToTasksIndex" class="blue-text" href="#"><< Back to list</a>`;
 }
 
 Task.prototype.formatButtons = function() {
   return `<div class="floating">${this.chooseButtonType()}${this.editButton()}${this.deleteButton()}</div>`;
-}
-
-Task.prototype.formatName = function() {
-  var html = `<div class="caps small-header">`;
-  html += `<b><a class="blue-text showTask" href="#" data-id="${this.id}">${this.name}</a></b>`;
-  html += `<span id="userNames">${this.getUsers()}</span></div>`;
-  return html;
-}
-
-Task.prototype.formatNotes = function() {
-  return `<span class="blue-text">${this.notes}</span>`;
-}
-
-Task.prototype.formatBackLink = function() {
-  return `<a id="backToTasksIndex" class="blue-text" href="#"><< Back to list</a>`;
 }
 
 Task.prototype.formatCommentsList = function() {
@@ -122,7 +100,27 @@ Task.prototype.formatHTML = function(type) {
     html += `</div><br></div>`;
     return html;
   }
+}
 
+Task.prototype.formatName = function() {
+  var html = `<div class="caps small-header">`;
+  html += `<b><a class="blue-text showTask" href="#" data-id="${this.id}">${this.name}</a></b>`;
+  html += `<span id="userNames">${this.getUsers()}</span></div>`;
+  return html;
+}
+
+Task.prototype.formatNotes = function() {
+  return `<span class="blue-text">${this.notes}</span>`;
+}
+
+Task.prototype.getUsers = function() {
+  if (this.users.length === 2) {
+      return ` &mdash; ${this.users[0].name} & ${this.users[1].name}`;
+  } else if (this.users.length === 1) {
+      return ` &mdash; ${this.users[0].name}`;
+  } else {
+      return "";
+  }
 }
 
 // end Task object methods

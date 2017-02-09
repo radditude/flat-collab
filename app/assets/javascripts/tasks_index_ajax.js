@@ -1,20 +1,40 @@
-let loadTeamTasks = function(teamId) {
-  var url = `/teams/${teamId}/tasks`;
-  $("#text-container").load(url + " #htmlGoesHere", function() {
-    currentTeam = teamId;
-    loadTaskList(url);
-    attachTeamTasksListeners();
+let deleteTaskRequest = function(url, id) {
+  $.ajax({
+    url: url,
+    method: "DELETE"
+  }).done(function() {
+    $(`#task${id}`).hide(500);
   });
 }
 
-let loadTaskList = function(url) {
-  $.get(url + "/load", function(response) {
-    $(response.tasks).each(function(index, task) {
+let getAllTasksButton = function() {
+  $.get(`/teams/${currentTeam}/tasks/load`, function(data) {
+    $("#tasksGoHere").empty();
+    $(data.tasks).each(function(index, task) {
       var thisTask = new Task(task);
-      var html = thisTask.formatHTML();
-      $("#tasksGoHere").prepend(html);
-    });
-  });
+      $("#tasksGoHere").prepend(thisTask.formatHTML());
+    })
+  })
+}
+
+let getIncompleteTasksButton = function() {
+  $.get(`/teams/${currentTeam}/tasks/incomplete`, function(data) {
+    $("#tasksGoHere").empty();
+    $(data.tasks).each(function(index, task) {
+      var thisTask = new Task(task);
+      $("#tasksGoHere").prepend(thisTask.formatHTML());
+    })
+  })
+}
+
+let getMyTasksButton = function() {
+  $.get(`/teams/${currentTeam}/tasks/user_tasks`, function(data) {
+    $("#tasksGoHere").empty();
+    $(data.tasks).each(function(index, task) {
+      var thisTask = new Task(task);
+      $("#tasksGoHere").prepend(thisTask.formatHTML());
+    })
+  })
 }
 
 let loadEditTask = function(taskId) {
@@ -39,70 +59,22 @@ let loadShowTask = function(taskId) {
   })
 }
 
-let patchEditForm = function(values) {
-  $.ajax({
-    url: `/teams/${currentTeam}/tasks/${currentTask}`,
-    method: "PATCH",
-    data: values
-  }).done(function() {
-    loadTeamTasks(currentTeam);
+let loadTaskList = function(url) {
+  $.get(url + "/load", function(response) {
+    $(response.tasks).each(function(index, task) {
+      var thisTask = new Task(task);
+      var html = thisTask.formatHTML();
+      $("#tasksGoHere").prepend(html);
+    });
   });
 }
 
-let postNewTask = function(values) {
-  var postRequest = $.post(`/teams/${currentTeam}/tasks`, values);
-  postRequest.done(function(data) {
-    var thisTask = new Task(data.task);
-    $("#tasksGoHere").prepend(thisTask.formatHTML());
-    $("form#newTaskForm")[0].reset();
-  });
-}
-
-let postNewComment = function(values, taskId) {
-  var postRequest = $.post(`/teams/${currentTeam}/tasks/${taskId}/comments`, values);
-  postRequest.done(function(data) {
-    var html = formatComment(data.comment.content);
-    $(`#task${taskId} .ui.bulleted.list`).append(html);
-    $(`#task${taskId}-comment-form`)[0].reset();
-  });
-}
-
-let getMyTasksButton = function() {
-  $.get(`/teams/${currentTeam}/tasks/user_tasks`, function(data) {
-    $("#tasksGoHere").empty();
-    $(data.tasks).each(function(index, task) {
-      var thisTask = new Task(task);
-      $("#tasksGoHere").prepend(thisTask.formatHTML());
-    })
-  })
-}
-
-let getIncompleteTasksButton = function() {
-  $.get(`/teams/${currentTeam}/tasks/incomplete`, function(data) {
-    $("#tasksGoHere").empty();
-    $(data.tasks).each(function(index, task) {
-      var thisTask = new Task(task);
-      $("#tasksGoHere").prepend(thisTask.formatHTML());
-    })
-  })
-}
-
-let getAllTasksButton = function() {
-  $.get(`/teams/${currentTeam}/tasks/load`, function(data) {
-    $("#tasksGoHere").empty();
-    $(data.tasks).each(function(index, task) {
-      var thisTask = new Task(task);
-      $("#tasksGoHere").prepend(thisTask.formatHTML());
-    })
-  })
-}
-
-let deleteTaskRequest = function(url, id) {
-  $.ajax({
-    url: url,
-    method: "DELETE"
-  }).done(function() {
-    $(`#task${id}`).hide(500);
+let loadTeamTasks = function(teamId) {
+  var url = `/teams/${teamId}/tasks`;
+  $("#text-container").load(url + " #htmlGoesHere", function() {
+    currentTeam = teamId;
+    loadTaskList(url);
+    attachTeamTasksListeners();
   });
 }
 
@@ -123,5 +95,33 @@ let patchCompleteTask = function(url, id) {
     method: "PATCH"
   }).done(function() {
     $(`#task${id} button.complete`).replaceWith(`<button class="mini ui completed green button" data-id="${id}">Completed!</button>`);
+  });
+}
+
+let patchEditForm = function(values) {
+  $.ajax({
+    url: `/teams/${currentTeam}/tasks/${currentTask}`,
+    method: "PATCH",
+    data: values
+  }).done(function() {
+    loadTeamTasks(currentTeam);
+  });
+}
+
+let postNewComment = function(values, taskId) {
+  var postRequest = $.post(`/teams/${currentTeam}/tasks/${taskId}/comments`, values);
+  postRequest.done(function(data) {
+    var html = formatComment(data.comment.content);
+    $(`#task${taskId} .ui.bulleted.list`).append(html);
+    $(`#task${taskId}-comment-form`)[0].reset();
+  });
+}
+
+let postNewTask = function(values) {
+  var postRequest = $.post(`/teams/${currentTeam}/tasks`, values);
+  postRequest.done(function(data) {
+    var thisTask = new Task(data.task);
+    $("#tasksGoHere").prepend(thisTask.formatHTML());
+    $("form#newTaskForm")[0].reset();
   });
 }
